@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="vboxStartScreen" maxHeight="-Infinity" stylesheets="@launchScreen.css" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label id="titleLaunchScreen" maxHeight="-Infinity" maxWidth="-Infinity" text="Scacchi">
+         <font>
+            <Font name="Gill Sans MT" size="83.0" />
+         </font>
+      </Label>
+      <JFXButton styleClass="startScreenButton" id="startButton" text="PLAY!"/>
+      <JFXButton styleClass="startScreenButton" id="optionButton" text="OPTION"/>
+   </children>
+</VBox>

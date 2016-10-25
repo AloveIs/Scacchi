@@ -1,0 +1,30 @@
+#titleLaunchScreen{
+    -fx-font-size: 83pt;
+    -fx-font-family: "Gill Sans MT";
+    -fx-pref-height: 105;
+    -fx-pref-width: 346;
+    -fx-text-fill: #fc002b;
+    -fx-padding: 50 0 50 0;
+
+}
+.startScreenButton{
+    -fx-font-size: 30pt;
+    -fx-pref-width: 300px;
+    -fx-pref-height: 100px;
+    -fx-font-family: "Gill Sans MT";
+    -fx-text-fill: "white";
+    -fx-font-weight: bold;
+    -fx-background-color: #fc002b;
+}
+
+.button{
+    -fx-alignment: center;
+}
+
+#vboxStartScreen{
+    -fx-spacing: 30px;
+    -fx-alignment: center;
+    -fx-background-image: url("sfondo1.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+}
