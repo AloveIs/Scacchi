@@ -1,23 +1,33 @@
-package sample.model;
+package sample.model.pieces;
 
 
-/**
- * Created by Pietro on 22/10/2016.
+import sample.model.Coordinate;
+
+/** This is the superclass representing
+ * the generic chess piece. From this one all the other
+ * types of pieces will be derived.
+ * See the classes
+ * <b>{@link sample.model}</b>,
+ * <b>{@link sample.model}</b>,
+ * <b>{@link sample.model}</b>,
+ * <b>{@link sample.model}</b>,
+ * @author Pietro Alovisi
+ * @since 25-10-2016
  */
 public class Piece {
 
-	private PieceType type;
-	private PieceColor color;
-	private Coordinate position;
+	protected PieceType type;
+	protected PieceColor color;
+	protected Coordinate position;
 
-	public Piece(PieceColor p,Coordinate position ){
+
+	//TODO: manage exception
+	public Piece(PieceColor p,Coordinate position ) throws Exception{
 
 		this.color = p;
 		this.position = position;
 	}
 
-	public Piece() {
-	}
 
 	public PieceColor getSide(){
 		return this.color;

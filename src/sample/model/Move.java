@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.model.pieces.Piece;
+
 /**
  * Created by Pietro on 22/10/2016.
  */

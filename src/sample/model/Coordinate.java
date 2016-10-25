@@ -11,7 +11,7 @@ private int vertical;
 
 
 	//TODO: migliorare il nome dell'eccezione
-	Coordinate (int horizontal, int vertical)throws Exception{
+	public Coordinate(int horizontal, int vertical)throws Exception{
 		if (horizontal > 7 || horizontal < 0 || vertical > 7 || vertical < 0 ) {
 			throw new Exception();
 		}

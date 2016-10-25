@@ -1,4 +1,4 @@
-package sample.model;
+package sample.model.pieces;
 
 import javafx.scene.image.Image;
 

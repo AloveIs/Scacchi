@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.model.pieces.PieceColor;
+
 /**
  * Created by Pietro on 25/10/2016.
  */
