@@ -32,10 +32,20 @@ public class Piece {
 	public PieceColor getSide(){
 		return this.color;
 	}
+	//TODO: come impedire a un giocatore di fare mosse che comportano scacco? prima io farei
+	// la mossa e poi verificherei sulla scacchiera se è scacco, in modo da poi fare
+	//un UNDO mandando un messaggio di ILLEGALMOVE al giocatore
+	abstract public boolean	 canGo(Chessboard chessboard, Move move);
+	abstract public List<Coordinate> canGo(Chessboard chessboard, Coordinate finalcoo);
 
-	public boolean canGo(Coordinate finalcoo){
-		//TODO: IMPLEMENTARE
-		return true;
+	protected boolean ownedBtOpponent(Piece rival){
+		if(rival == null){
+			return false;
+		}
+		if (this.color == rival.getSide()) {
+			return true;
+		}
+		return false;
 	}
 
 	public static void main(String[] args){
@@ -52,5 +62,7 @@ public class Piece {
 		System.out.println("on the " + p.getSide().toString() + " side");
 
 	}
+
+
 
 }

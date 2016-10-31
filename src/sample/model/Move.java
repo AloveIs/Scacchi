@@ -13,7 +13,7 @@ private Coordinate startPos;
 private Coordinate finalPos;
 
 //TODO: sistemare l'eccezione
-public Move (Coordinate startPos , Coordinate finalPos)throws Exception{
+	public Move (Coordinate startPos , Coordinate finalPos)throws Exception{
 
 		if (startPos == null || finalPos == null){
 		throw new Exception();
@@ -23,11 +23,21 @@ public Move (Coordinate startPos , Coordinate finalPos)throws Exception{
 		this.finalPos = finalPos;
 		}
 
+	public Coordinate getOrigin(){
+
+		return startPos;
+	}
+
+public Coordinate getDestination(){
+
+		return finalPos;
+	}
+
 	public boolean islegal(){
 
 		Piece startingPiece = chessBoard.getPiece(startPos);
 
-		startingPiece.canGo(finalPos);
+		//startingPiece.canGo(finalPos);
 		return true;
 	}
 

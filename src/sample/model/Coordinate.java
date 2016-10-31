@@ -22,7 +22,7 @@ private int vertical;
 
 	@Override
 	public String toString(){
-		return "" + horizontal + ";" + vertical;
+		return "(" + horizontal + ";" + vertical + ")";
 	}
 
 	public int getHorizontal(){
@@ -37,6 +37,19 @@ private int vertical;
 		return vertical*8 + horizontal;
 	}
 
+	public Coordinate increase(int horizontal, int vertical){
+		return new Coordinate(this.horizontal + horizontal , this.vertical + vertical);
+	}
+
+	public Coordinate increaseVertical(int vertical){
+
+		return new Coordinate(this.horizontal, this.vertical + vertical);
+	}
+
+	public Coordinate increaseHorizontal(int horizontal){
+
+		return new Coordinate(this.horizontal + horizontal , this.vertical);
+	}
 	//TODO: migliorare l'eccezione
 	public void setAsIndex(int index) throws Exception{
 		if (index > 63 || index < 0){

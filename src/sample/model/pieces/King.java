@@ -9,12 +9,19 @@ import sample.model.Move;
  */
 public class King extends Piece {
 
+	private boolean yetMoved;
+
 	public King(PieceColor p, Coordinate position) throws Exception {
 		super(p, position);
 		this.type = PieceType.KING;
 	}
 
 	public boolean canMove(Chessboard chessboard, Move move){
+
+		Coordinate currentPos = move.getOrigin();
+		Coordinate finalPos = move.getDestination();
+
+		//TODO: implementare le condizioni per non essere in scacco
 
 		return true;
 	}
