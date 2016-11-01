@@ -109,7 +109,8 @@ private int column;
 
 	@Override
 	public String toString(){
-		return "(" + row + ";" + column + ")";
+		char c = (char) (column + 'a');
+		return "(" + (row+1) + ";" + c + ")";
 	}
 
 

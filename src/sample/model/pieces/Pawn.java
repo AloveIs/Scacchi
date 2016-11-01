@@ -17,16 +17,20 @@ public class Pawn extends Piece{
 
 	private boolean yetMoved;
 
+	/**{@inheritDoc}
+	 */
 	public Pawn(PieceColor color, Coordinate position, Chessboard board) {
 		super(color, position, board);
 		this.type = PieceType.PAWN;
 		this.yetMoved = false;
 	}
 
+	/**{@inheritDoc}
+	 */
 	@Override
 	public ArrayList<Coordinate> accessiblePositions(){
 
-		ArrayList <Coordinate> possible = new ArrayList<>(4);
+		ArrayList <Coordinate> possibleCoordinate = new ArrayList<>(4);
 		int vIncrement;
 		Coordinate cursor  = this.getPosition();
 		Piece piece = null;
@@ -45,13 +49,13 @@ public class Pawn extends Piece{
 			//verifico i possibili movimenti in verticale
 
 			if (piece == null) {
-				possible.add(cursor.clone());
+				possibleCoordinate.add(cursor.clone());
 
 				if (!yetMoved){
 					cursor.increaseVertical(vIncrement);
 					piece = chessboard.getPiece(cursor);
 					if( piece == null) {
-						possible.add(cursor.clone());
+						possibleCoordinate.add(cursor.clone());
 					}
 				}
 			}
@@ -60,14 +64,14 @@ public class Pawn extends Piece{
 			System.err.println(ss + position + "non puoi muoveri completamente in verticale");
 		}
 		//need to reset the cursor because of the exception
-		//see if it can be possible to eat an opponent's piece
+		//see if it can be possibleCoordinate to eat an opponent's piece
 		cursor = this.getPosition();
 
 		try {
 			cursor.increase(vIncrement,1);
 			piece = chessboard.getPiece(cursor);
 			if (ownedByOpponent(piece)) {
-				possible.add(cursor.clone());
+				possibleCoordinate.add(cursor.clone());
 			}
 		} catch (CoordinateExceededException e){
 			//e.printStackTrace();
@@ -80,7 +84,7 @@ public class Pawn extends Piece{
 			cursor.increase(vIncrement, -1);
 			piece = chessboard.getPiece(cursor);
 			if (ownedByOpponent(piece)) {
-				possible.add(cursor.clone());
+				possibleCoordinate.add(cursor.clone());
 			}
 		}catch (CoordinateExceededException e){
 			//e.printStackTrace();
@@ -88,7 +92,7 @@ public class Pawn extends Piece{
 		}
 		//TODO: scegliere se ritornare una lista vuoto o addirittura null
 		// preferirei una lista vuota
-		return possible;
+		return possibleCoordinate;
 	}
 
 }

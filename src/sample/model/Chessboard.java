@@ -1,16 +1,48 @@
 package sample.model;
 
 import sample.model.exception.CoordinateExceededException;
-import sample.model.pieces.Pawn;
-import sample.model.pieces.Piece;
-import sample.model.pieces.PieceColor;
-import sample.model.pieces.PieceType;
+import sample.model.pieces.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Pietro on 22/10/2016.
+/**This class models the chessboard used in the game. It is seen as a grid 8 by 8-
+ * The indexing of this table is from 0 to 7 in either the vertical and the horizontal
+ * direction. These index starts from the lower left corner.
+ * <style>
+ *     #reptable,.reptd{
+ *         border: 3px solid;
+ *         border-collapse: collapse;
+ *     }
+ * </style>
+ * <table id="reptable">
+ *     <tr>
+ *         <td class="reptd">(3,0)</td>
+ *         <td class="reptd">(3,1)</td>
+ *         <td class="reptd">(3,2)</td>
+ *         <td class="reptd">(3,3)</td>
+ *     </tr>
+ *     <tr>
+ *         <td class="reptd">(2,0)</td>
+ *         <td class="reptd">(2,1)</td>
+ *         <td class="reptd">(2,2)</td>
+ *         <td class="reptd">(2,3)</td>
+ *     </tr>
+ *     <tr>
+ *         <td class="reptd">(1,0)</td>
+ *         <td class="reptd">(1,1)</td>
+ *         <td class="reptd">(1,2)</td>
+ *         <td class="reptd">(1,3)</td>
+ *     </tr>
+ *     <tr>
+ *         <td class="reptd">(0,0)</td>
+ *         <td class="reptd">(0,1)</td>
+ *         <td class="reptd">(0,2)</td>
+ *         <td class="reptd">(0,3)</td>
+ *     </tr>
+ * </table>
+ *
+ * Created by Pietro Alovisi on 22/10/2016.
  */
 public class Chessboard {
 
@@ -31,9 +63,12 @@ public class Chessboard {
 		this.chessboard = new Piece[8][8];
 
 		try {
-			placePiece(new Pawn(PieceColor.WHITE, new Coordinate(7,7) , this));
-			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(3,0) , this));
-			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(1,1), this));
+			placePiece(new Rook(PieceColor.WHITE, new Coordinate(1,4) , this));
+			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(5,4) , this));
+			placePiece(new Pawn(PieceColor.WHITE, new Coordinate(1,2), this));
+			placePiece(new Bishop(PieceColor.BLACK, new Coordinate(3,2), this));
+			placePiece(new Queen(PieceColor.BLACK, new Coordinate(3,6), this));
+			//placePiece(new Pawn(PieceColor.BLACK, new Coordinate(1,1), this));
 		} catch (CoordinateExceededException e) {
 			e.printStackTrace();
 		}
@@ -60,6 +95,12 @@ public class Chessboard {
 
 	}
 
+	/** Method for locating the king of a particular team.
+	 * This method is usefull if you want to locate a king piece
+	 * of a team, either black or white.
+	 * @param color the color of the king we are looking for
+	 * @return returns the coordinate of the board in which the king is
+	 */
 	public Coordinate locateKing(PieceColor color){
 
 		if (color == PieceColor.WHITE){
@@ -107,6 +148,7 @@ public class Chessboard {
 
 
 	//TODO: quewsto deve ritornare un messaggio per il giocatore per sapere se l'azione è andata a buon fine, o altrimenti perchè non è andata
+	//TODO: implementare lo yetMoved per i pezzi
 	public void move(Move move){
 
 		Piece originPiece = getPiece(move.getOrigin());
@@ -176,7 +218,6 @@ public class Chessboard {
 
 
 	public void printChessboard() {
-		String representation = "";
 
 		Coordinate thisC = null;
 

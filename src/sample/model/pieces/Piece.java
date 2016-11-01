@@ -31,6 +31,13 @@ public abstract class Piece {
 	 un UNDO mandando un messaggio di ILLEGALMOVE al giocatore*/
 
 	//TODO:controllare che non siano nulli
+
+	/**
+	 *
+	 * @param color the color of the piece, therefore defining the team the piece is on
+	 * @param position the position in which the piece is
+	 * @param board
+	 */
 	public Piece(PieceColor color, Coordinate position, Chessboard board) {
 		this.color = color;
 		this.position = position;
