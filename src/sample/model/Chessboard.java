@@ -1,6 +1,8 @@
 package sample.model;
 
+import sample.model.pieces.Pawn;
 import sample.model.pieces.Piece;
+import sample.model.pieces.PieceColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,8 @@ public class Chessboard {
 
 		this.chessboard = new Piece[8][8];
 
+		chessboard[0][0] = new Pawn(PieceColor.WHITE);
+	/*
 		for (int i = 0; i < 8; i++) {
 
 			//chessboard[1][i] = new Piece(PieceColor.BLACK);
@@ -39,14 +43,25 @@ public class Chessboard {
 
 		for (int i = 0; i < 8; i++) {
 
-			chessboard[6][i] = new Piece();
+			chessboard[6][i] = null;
 		}
 
 		//INIZIALIZZAZIONE NERI
 
-
+	*/
 
 	}
+
+	public boolean placePiece(Coordinate position, Piece piece){
+
+		Piece p = getPiece(position);
+		p = piece;
+
+		return true;
+
+	}
+
+
 	public Piece getPiece(int hor, int ver) throws Exception{
 
 		if (hor > 7 || hor < 0 || ver > 7 || ver < 0){
@@ -62,5 +77,21 @@ public class Chessboard {
 
 	}
 
+	@Override
+	public String toString() {
+		String representation = "";
 
+
+		for (int i = 0; i < 8 ; i++) {
+
+			System.out.println("Riga : " + (i+1));
+			for (int j = 0; j < 8; j++) {
+				if (chessboard[i][j] != null){
+					System.out.println("\t> in (" + (i+1) + "," + j + ") " + chessboard[i][j].toString());
+				}
+			}
+		}
+
+		return representation;
+	}
 }

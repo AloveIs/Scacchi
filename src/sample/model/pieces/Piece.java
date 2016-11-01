@@ -1,7 +1,11 @@
 package sample.model.pieces;
 
 
+import sample.model.Chessboard;
 import sample.model.Coordinate;
+import sample.model.Move;
+
+import java.util.List;
 
 /** This is the superclass representing
  * the generic chess piece. From this one all the other
@@ -14,7 +18,7 @@ import sample.model.Coordinate;
  * @author Pietro Alovisi
  * @since 25-10-2016
  */
-public class Piece {
+public abstract class Piece {
 
 	protected PieceType type;
 	protected PieceColor color;
@@ -22,10 +26,16 @@ public class Piece {
 
 
 	//TODO: manage exception
+
+
 	public Piece(PieceColor p,Coordinate position ) throws Exception{
 
 		this.color = p;
 		this.position = position;
+	}
+
+	public Piece(PieceColor p) {
+		this.color = p;
 	}
 
 
@@ -36,9 +46,9 @@ public class Piece {
 	// la mossa e poi verificherei sulla scacchiera se è scacco, in modo da poi fare
 	//un UNDO mandando un messaggio di ILLEGALMOVE al giocatore
 	abstract public boolean	 canGo(Chessboard chessboard, Move move);
-	abstract public List<Coordinate> canGo(Chessboard chessboard, Coordinate finalcoo);
+	abstract public List<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate finalcoo);
 
-	protected boolean ownedBtOpponent(Piece rival){
+	protected boolean ownedByOpponent(Piece rival){
 		if(rival == null){
 			return false;
 		}
@@ -52,14 +62,6 @@ public class Piece {
 
 		Piece p = null;
 		Piece p1 = null;
-		try {
-			p = new Piece( PieceColor.BLACK, new Coordinate(2,2));
-			p1 = new Piece(PieceColor.BLACK,new Coordinate(1,1));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println((p.getSide() == p1.getSide()));
-		System.out.println("on the " + p.getSide().toString() + " side");
 
 	}
 
