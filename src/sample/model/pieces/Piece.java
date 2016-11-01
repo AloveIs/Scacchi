@@ -27,12 +27,14 @@ public abstract class Piece {
 
 	//TODO: manage exception
 
-
+	/*
 	public Piece(PieceColor p,Coordinate position ) throws Exception{
 
 		this.color = p;
 		this.position = position;
 	}
+	*/
+
 
 	public Piece(PieceColor p) {
 		this.color = p;
