@@ -44,18 +44,28 @@ private int vertical;
 		return vertical*8 + horizontal;
 	}
 
-	public Coordinate increase(int horizontal, int vertical) throws CoordinateExceededException {
-		return new Coordinate(this.horizontal + horizontal , this.vertical + vertical);
+	public void increase(int horizontal, int vertical) throws CoordinateExceededException {
+
+		int finalH = this.horizontal + horizontal;
+		int finalV = this.vertical + vertical;
+
+		if (finalH > 7 || finalH < 0 || finalV > 7 || finalV < 0 ) {
+			throw new CoordinateExceededException();
+		}else{
+			this.horizontal = finalH;
+			this.vertical = finalV;
+		}
+
+
 	}
 
-	public Coordinate increaseVertical(int vertical) throws CoordinateExceededException {
-
-		return new Coordinate(this.horizontal, this.vertical + vertical);
+	public void increaseVertical(int vertical) throws CoordinateExceededException {
+		this.increase(0,vertical);
 	}
 
-	public Coordinate increaseHorizontal(int horizontal) throws CoordinateExceededException {
+	public void increaseHorizontal(int horizontal) throws CoordinateExceededException {
 
-		return new Coordinate(this.horizontal + horizontal , this.vertical);
+		this.increase(horizontal,0);
 	}
 
 
@@ -109,15 +119,15 @@ private int vertical;
 		}
 
 		try {
-			c2 = c1.increase(2,1);
-			System.out.println(c2.toString());
+			c1.increase(2,1);
+			System.out.println(c1.toString());
 		} catch (CoordinateExceededException e) {
 			//e.printStackTrace();
 			System.out.println("Errore seconda coordinata");
 		}
 
 		try {
-			c2 = c1.increase(-4,-1);
+			c2.increase(-4,-1);
 			System.out.println(c2.toString());
 			System.out.println(c2.equals(new Coordinate(0,3)));
 		} catch (CoordinateExceededException e) {
