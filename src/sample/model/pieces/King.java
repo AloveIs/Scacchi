@@ -4,17 +4,21 @@ import sample.model.Chessboard;
 import sample.model.Coordinate;
 import sample.model.Move;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Pietro on 25/10/2016.
  */
 public class King extends Piece {
-
+	/**True if the piece has already made a move,
+	 * false otherwise
+	 */
 	private boolean yetMoved;
 
-	public King(PieceColor p, Coordinate position) throws Exception {
-		super(p, position);
+	public King(PieceColor p) throws Exception {
+		super(p);
 		this.type = PieceType.KING;
 	}
 
@@ -24,7 +28,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	public List<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate finalcoo) {
+	public ArrayList<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate position) {
 		return null;
 	}
 

@@ -6,7 +6,7 @@ import sample.model.exception.CoordinateExceededException;
  * Created by Pietro on 22/10/2016.
  */
 
-public class Coordinate{
+public class Coordinate {
 
 private int horizontal;
 private int vertical;
@@ -18,18 +18,13 @@ private int vertical;
 	 * @param vertical the vertical component of the coordinate
 	 * @throws CoordinateExceededException if at least one of the parameters exceed its domain
 	 */
-	public Coordinate(int horizontal, int vertical)throws CoordinateExceededException{
+	public Coordinate (int horizontal, int vertical)throws CoordinateExceededException{
 		if (horizontal > 7 || horizontal < 0 || vertical > 7 || vertical < 0 ) {
 			throw new CoordinateExceededException();
 		}
-	//TODO: controllare che non ci sia già una pedina in quelle coordinate
+
 		this.horizontal = horizontal;
 		this.vertical = vertical;
-	}
-
-	@Override
-	public String toString(){
-		return "(" + horizontal + ";" + vertical + ")";
 	}
 
 	public int getHorizontal(){
@@ -56,7 +51,6 @@ private int vertical;
 			this.vertical = finalV;
 		}
 
-
 	}
 
 	public void increaseVertical(int vertical) throws CoordinateExceededException {
@@ -68,7 +62,6 @@ private int vertical;
 		this.increase(horizontal,0);
 	}
 
-
 	public void setAsIndex(int index) throws CoordinateExceededException{
 		if (index > 63 || index < 0){
 			throw new CoordinateExceededException();
@@ -76,6 +69,7 @@ private int vertical;
 		horizontal = index%8;
 		vertical = index/8;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -92,7 +86,7 @@ private int vertical;
 	}
 
 	@Override
-	public Coordinate clone() throws CloneNotSupportedException {
+	public Coordinate clone(){
 		try {
 			return new Coordinate(this.horizontal, this.vertical);
 		} catch (CoordinateExceededException e) {
@@ -102,19 +96,24 @@ private int vertical;
 		return null;
 	}
 
+	@Override
+	public String toString(){
+		return "(" + horizontal + ";" + vertical + ")";
+	}
+
 
 	public static void main(String[] args){
 
 		Chessboard scacchiera = new Chessboard();
 
-		Coordinate c1 = null, c2 = null, c3;
+		Coordinate c1 = null, c2 = null;
 
 
 		try {
 			c1 = new Coordinate(3,4);
 			System.out.println(c1.toString());
 		} catch (CoordinateExceededException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("Errore prima coordinata");
 		}
 
@@ -127,15 +126,16 @@ private int vertical;
 		}
 
 		try {
+			c2 = c1.clone();
 			c2.increase(-4,-1);
 			System.out.println(c2.toString());
-			System.out.println(c2.equals(new Coordinate(0,3)));
+			System.out.println(c2.equals(new Coordinate(1,4)));
 		} catch (CoordinateExceededException e) {
 			//e.printStackTrace();
 			System.out.println("Errore seconda coordinata");
 		}
 
-
+	scacchiera.printChessboard();
 
 	}
 

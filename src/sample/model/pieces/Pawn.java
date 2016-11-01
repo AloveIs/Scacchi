@@ -20,6 +20,7 @@ public class Pawn extends Piece{
 	public Pawn(PieceColor p) {
 		super(p);
 		this.type = PieceType.PAWN;
+		this.yetMoved = false;
 	}
 
 	/*
@@ -30,16 +31,10 @@ public class Pawn extends Piece{
 	*/
 
 	@Override
-	public boolean canGo(Chessboard chessboard, Move move) {
-		return false;
-	}
+	public ArrayList<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate position){
 
-
-	@Override
-	public List<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate position){
-
-		List <Coordinate> possible = new ArrayList(4);
-		Coordinate cursor;
+		ArrayList <Coordinate> possible = new ArrayList<>(4);
+		Coordinate cursor  = position.clone();
 		Piece piece = null;
 
 
@@ -51,24 +46,24 @@ public class Pawn extends Piece{
 		}
 
 		try {
-			cursor = position.increaseVertical(vIncrement);
+			cursor.increaseVertical(vIncrement);
 			piece = chessboard.getPiece(cursor);
 
 			//verifico i possibili movimenti in verticale
 
 			if (piece == null) {
-				possible.add(cursor);
+				possible.add(cursor.clone());
 
 				if (!yetMoved){
-					cursor = cursor.increaseVertical(vIncrement);
+					cursor.increaseVertical(vIncrement);
 					piece = chessboard.getPiece(cursor);
 					if( piece == null) {
-						possible.add(cursor);
+						possible.add(cursor.clone());
 					}
 				}
 			}
 		} catch (CoordinateExceededException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("non puoi muoveri in veriticale di "+ vIncrement + " o di" + (vIncrement*2));
 		}
 		//need to reset the cursor because of the exception
@@ -77,25 +72,25 @@ public class Pawn extends Piece{
 		cursor = position;
 
 		try {
-			cursor = position.increase(1,vIncrement);
+			cursor.increase(1,vIncrement);
 			piece = chessboard.getPiece(cursor);
 			if (ownedByOpponent(piece)) {
-				possible.add(cursor);
+				possible.add(cursor.clone());
 			}
 		} catch (CoordinateExceededException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("Non pui andare a dx e in verticale di " +vIncrement);
 		}
 
 		cursor = position;
 		try {
-			cursor = position.increase(-1, vIncrement);
+			cursor.increase(-1, vIncrement);
 			piece = chessboard.getPiece(cursor);
 			if (ownedByOpponent(piece)) {
-				possible.add(cursor);
+				possible.add(cursor.clone());
 			}
 		}catch (CoordinateExceededException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("Non pui andare a sx e in verticale di " +vIncrement);
 		}
 		//TODO: scegliere se ritornare una lista vuoto o addirittura null
@@ -103,8 +98,4 @@ public class Pawn extends Piece{
 		return possible;
 	}
 
-	@Override
-	public String toString() {
-		return "" + this.color + this.type;
-	}
 }

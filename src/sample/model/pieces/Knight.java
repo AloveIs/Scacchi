@@ -4,6 +4,7 @@ import sample.model.Chessboard;
 import sample.model.Coordinate;
 import sample.model.Move;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,12 +13,7 @@ import java.util.List;
 public class Knight extends Piece{
 
 	@Override
-	public boolean canGo(Chessboard chessboard, Move move) {
-		return false;
-	}
-
-	@Override
-	public List<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate finalcoo) {
+	public ArrayList<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate position) {
 		return null;
 	}
 

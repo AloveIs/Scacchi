@@ -4,7 +4,8 @@ import sample.model.Chessboard;
 import sample.model.Coordinate;
 import sample.model.Move;
 
-import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  * Created by Pietro on 25/10/2016.
@@ -17,12 +18,12 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public List<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate finalcoo) {
+	public ArrayList<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate position) {
 		return null;
 	}
 
-	public Queen(PieceColor p, Coordinate position) throws Exception {
-		super(p, position);
+	public Queen(PieceColor p) throws Exception {
+		super(p);
 		this.type = PieceType.QUEEN;
 	}
 }
