@@ -10,16 +10,6 @@ import java.util.List;
 /**
  * Created by Pietro on 25/10/2016.
  */
-public class Knight extends Piece{
-
-	@Override
-	public ArrayList<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate position) {
-		return null;
-	}
-
-	public Knight(PieceColor p) throws Exception {
-		super(p);
-		type = PieceType.KNIGHT;
-	}
+public class Knight {
 
 }

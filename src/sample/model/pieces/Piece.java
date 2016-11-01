@@ -4,6 +4,8 @@ package sample.model.pieces;
 import sample.model.Chessboard;
 import sample.model.Coordinate;
 import sample.model.Move;
+import sample.model.exception.CoordinateExceededException;
+
 import java.util.ArrayList;
 
 /** This is the superclass representing
@@ -27,30 +29,29 @@ public abstract class Piece {
 		/*TODO: come impedire a un giocatore di fare mosse che comportano scacco? prima io farei
 	 la mossa e poi verificherei sulla scacchiera se è scacco, in modo da poi fare
 	 un UNDO mandando un messaggio di ILLEGALMOVE al giocatore*/
-	//TODO: this constructor is utterly useless
-	/*
-	public Piece(PieceColor p,Coordinate position ) throws Exception{
 
-		this.color = p;
+	//TODO:controllare che non siano nulli
+	public Piece(PieceColor color, Coordinate position, Chessboard board) {
+		this.color = color;
 		this.position = position;
-	}
-	*/
-
-	public Piece(PieceColor p) {
-		this.color = p;
+		this.chessboard = board;
 	}
 
 
 	//TODO; commentare questa classe, finendo anche questo metodo
 	/**
 	 *
-	 * @param chessboard
-	 * @param position
-	 * @return
+	 * @return returns all possibile position accessible by the piece
 	 */
-	abstract public ArrayList<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate position);
+	abstract public ArrayList<Coordinate> accessiblePositions();
 
+	public void setPosition(Coordinate position) {
+		this.position = position;
+	}
 
+	public void setPosition(int horizontal, int vertical) throws CoordinateExceededException {
+		this.position = new Coordinate(horizontal, vertical);
+	}
 
 	public PieceColor getSide(){
 		return this.color;
@@ -60,15 +61,18 @@ public abstract class Piece {
 		return type;
 	}
 
+	public Coordinate getPosition(){
+		return position.clone();
+	}
+
 	/**Method used for determing which move are legal or not
-	 * @param chessboard the chessboard on wich we are playing
-	 * @param move the move we are tryng to make
+	 * @param finalDestination the finald destination of the move that the player wants to move
 	 * @return retuns true if the move is legal, false otherwise
 	 */
-	public boolean canGo(Chessboard chessboard, Move move){
-		ArrayList<Coordinate>list = accessiblePositions(chessboard, move.getOrigin());
+	public boolean canGo(Coordinate finalDestination){
+		ArrayList<Coordinate> list = accessiblePositions();
 
-		if (list.contains(move.getDestination())){
+		if (list.contains(finalDestination)){
 			return  true;
 		}else{
 			return false;
@@ -86,14 +90,14 @@ public abstract class Piece {
 			return false;
 		}
 		if (this.color == rival.getSide()) {
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return this.color + " " + this.type;
+		return this.color + " " + this.type + " in " + position.toString();
 	}
 
 }

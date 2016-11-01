@@ -11,23 +11,21 @@ import java.util.List;
 /**
  * Created by Pietro on 25/10/2016.
  */
-public class King extends Piece {
+public class King{
 	/**True if the piece has already made a move,
 	 * false otherwise
 	 */
 	private boolean yetMoved;
 
-	public King(PieceColor p) throws Exception {
-		super(p);
-		this.type = PieceType.KING;
+	public King(PieceColor color, Coordinate position, Chessboard board) {
+
 	}
 
-	@Override
+
 	public boolean canGo(Chessboard chessboard, Move move) {
 		return false;
 	}
 
-	@Override
 	public ArrayList<Coordinate> accessiblePositions(Chessboard chessboard, Coordinate position) {
 		return null;
 	}

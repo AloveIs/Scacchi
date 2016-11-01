@@ -1,6 +1,5 @@
 package sample.model;
 
-import com.sun.deploy.util.BlackList;
 import sample.model.exception.CoordinateExceededException;
 import sample.model.pieces.Pawn;
 import sample.model.pieces.Piece;
@@ -16,8 +15,8 @@ import java.util.List;
 public class Chessboard {
 
 	/** The chessboard
-	 * The first index represents the horizontal dimension.
-	 * The second index represents the vertical one.
+	 * The first index represents the row dimension.
+	 * The second index represents the column one.
 	 */
 	private Piece[][] chessboard;	//the board used in the game
 
@@ -31,7 +30,13 @@ public class Chessboard {
 
 		this.chessboard = new Piece[8][8];
 
-		chessboard[0][0] = new Pawn(PieceColor.WHITE);
+		try {
+			placePiece(new Pawn(PieceColor.WHITE, new Coordinate(7,7) , this));
+			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(3,0) , this));
+			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(1,1), this));
+		} catch (CoordinateExceededException e) {
+			e.printStackTrace();
+		}
 	/*
 		for (int i = 0; i < 8; i++) {
 
@@ -57,20 +62,19 @@ public class Chessboard {
 
 	public Coordinate locateKing(PieceColor color){
 
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-
-				if (chessboard[i][j].getSide() == color && chessboard[i][j].getType() == PieceType.KING){
-					try {
-						return new Coordinate(i,j);
-					} catch (CoordinateExceededException e) {
-						e.printStackTrace();
-					}
+		if (color == PieceColor.WHITE){
+			for (Piece p : this.whiteList){
+				if (p.getType() == PieceType.KING){
+					return p.getPosition();
 				}
-
+			}
+		}else{
+			for (Piece p : this.blackList){
+				if (p.getType() == PieceType.KING){
+					return p.getPosition();
+				}
 			}
 		}
-
 		//TODO: gestire nel caso in cui non trovi il re (non ho idea di come fare, mi sembra sprecato tirare fuori ulteriori eccezioni)
 		return null;
 	}
@@ -78,17 +82,23 @@ public class Chessboard {
 	private boolean isCheck(PieceColor color){
 
 		Coordinate myKing = locateKing(color);
+		//TODO: come in {@link:Chessboard.isCheck()} quando non trova il re è un problema perchè teoricamente il gioco è finito
+		if (myKing == null)
+			return false;
+
 		boolean result = false;
 
 		if (color == PieceColor.WHITE){
 			for (Piece p : this.blackList){
-				if(p.a)
-
+				if (p.canGo(myKing)){
+					return true;
+				}
 			}
 		}else{
 			for (Piece p : this.whiteList){
-
-
+				if (p.canGo(myKing)){
+					return true;
+				}
 			}
 		}
 
@@ -99,25 +109,26 @@ public class Chessboard {
 	//TODO: quewsto deve ritornare un messaggio per il giocatore per sapere se l'azione è andata a buon fine, o altrimenti perchè non è andata
 	public void move(Move move){
 
-		Piece origin = getPiece(move.getOrigin());
+		Piece originPiece = getPiece(move.getOrigin());
 
-		if (origin == null){
+
+		if (originPiece == null){
 			//TODO: lanciare eccezzione: "non è una mossa"
 		}
 
-		if (origin.canGo(this, move)){
+		if (originPiece.canGo(move.getDestination())){
 
-			Piece temPice = this.getPiece(move.getDestination());
+			Piece temPiece = this.getPiece(move.getDestination());
 			//make the move
-			placePiece(move.getDestination(),origin);
+			placePiece(move.getDestination(),originPiece);
 			placePiece(move.getOrigin(), null);
 
 			//check if is check
 
-			if (isCheck(origin.getSide())){
+			if (isCheck(originPiece.getSide())){
 				//if it's check then restore everythin
-				placePiece(move.getOrigin(), origin);
-				placePiece(move.getDestination(),temPice);
+				placePiece(move.getOrigin(), originPiece);
+				placePiece(move.getDestination(),temPiece);
 
 				//TODO: send an error message saying : "scacco, mossa non valida"
 
@@ -132,30 +143,35 @@ public class Chessboard {
 		}
 	}
 
+	private void placePiece(Piece piece){
+		this.chessboard[piece.getPosition().getRow()][piece.getPosition().getColumn()] = piece;
+	}
 
+	private void placePiece(Coordinate position, Piece piece){
+		piece.setPosition(position);
+		placePiece(piece);
+	}
 
-	private boolean placePiece(Coordinate position, Piece piece){
+	private boolean placePiece(int row, int column, Piece piece) throws CoordinateExceededException {
 
-		this.chessboard[position.getHorizontal()][position.getVertical()] = piece;
+		piece.setPosition(row,column);
+		placePiece(piece);
 
 		return true;
-
 	}
 
 
-	public Piece getPiece(int hor, int ver) throws CoordinateExceededException{
+	public Piece getPiece(int row, int col) throws CoordinateExceededException{
 
-		if (hor > 7 || hor < 0 || ver > 7 || ver < 0){
+		if (row > 7 || row < 0 || col > 7 || col < 0){
 			throw new CoordinateExceededException();
 		}
 
-		return chessboard[hor][ver];
+		return chessboard[row][col];
 	}
 
 	public Piece getPiece(Coordinate coo){
-
-		return chessboard[coo.getHorizontal()][coo.getVertical()];
-
+		return chessboard[coo.getRow()][coo.getColumn()];
 	}
 
 
@@ -166,7 +182,7 @@ public class Chessboard {
 
 		for (int i = 0; i < 8 ; i++) {
 
-			System.out.println("Riga : " + (i+1));
+			System.out.println("Riga : " + i);
 			for (int j = 0; j < 8; j++) {
 				if (chessboard[i][j] != null){
 					System.out.println("\t> in (" + i + "," + j + ") " + chessboard[i][j].toString());
@@ -175,7 +191,7 @@ public class Chessboard {
 					} catch (CoordinateExceededException e) {
 						e.printStackTrace();
 					}
-					for(Coordinate c : chessboard[i][j].accessiblePositions(this, thisC)){
+					for(Coordinate c : chessboard[i][j].accessiblePositions()){
 						System.out.println("\t\t> " + c.toString());
 					}
 				}
