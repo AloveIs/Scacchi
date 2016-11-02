@@ -52,6 +52,7 @@ public class Pawn extends Piece{
 				possibleCoordinate.add(cursor.clone());
 
 				if (!yetMoved){
+					//FIXME: ridurre il volume delle istruzioni collassando insieme le istruzioni com in King
 					cursor.increaseVertical(vIncrement);
 					piece = chessboard.getPiece(cursor);
 					if( piece == null) {

@@ -24,13 +24,18 @@ private int column;
 		setCoordinate(row,column);
 	}
 
+
 	public void setCoordinate(int row, int column)throws CoordinateExceededException{
 		if (row > 7 || row < 0 || column > 7 || column < 0 ) {
 			throw new CoordinateExceededException();
 		}
-
 		this.row = row;
 		this.column = column;
+	}
+
+	public void setCoordinate(Coordinate coordinate){
+		this.row = coordinate.getRow;
+		this.column = coordinate.getColumn;
 	}
 
 	public void setAsIndex(int index) throws CoordinateExceededException{
@@ -40,19 +45,30 @@ private int column;
 		row = index/8;
 		column = index%8;
 	}
-
+	
+	/** Get the row index represent by the coordinate.
+	 */
 	public int getRow(){
 		return this.row;
 	}
 
+	/** Get the column index represent by the coordinate.
+	 */
 	public int getColumn(){
 		return this.column;
 	}
-
+	/** Get the index represented by the coordinate.
+	 */
 	public int getAsIndex(){
 		return row*8 + column;
 	}
 
+	/**Increase both the indexes of the coordinate.
+	 * 
+	 * @param row how many rows i want to move (with sign <b>+</b> -> UP , <b>-</b> -> DOWN)
+	 * @param column how many rows i want to move (with sign <b>+</b> -> UP , <b>-</b> -> DOWN)
+	 * @throws CoordinateExceededException
+	 */
 	public void increase(int row, int column) throws CoordinateExceededException {
 
 		int finalRow = this.row + row;
@@ -64,10 +80,9 @@ private int column;
 			this.row = finalRow;
 			this.column = finalColumn;
 		}
-
 	}
 
-	/**
+	/**Increase the vertical index of the coordinate.
 	 *
 	 * @param row how many rows i want to move (with sign <b>+</b> -> UP , <b>-</b> -> DOWN)
 	 * @throws CoordinateExceededException
@@ -75,13 +90,18 @@ private int column;
 	public void increaseVertical(int row) throws CoordinateExceededException {
 		this.increase(row,0);
 	}
-
+	/**Increase the horizontal index of the coordinate.
+	 * 
+	 * @param column how many rows i want to move (with sign <b>+</b> -> UP , <b>-</b> -> DOWN)
+	 * @throws CoordinateExceededException
+	 */
 	public void increaseHorizontal(int column) throws CoordinateExceededException {
 
 		this.increase(0,column);
 	}
 	
-
+	/**{@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 
@@ -96,6 +116,8 @@ private int column;
 		}
 	}
 
+	/**{@inheritDoc}
+	 */
 	@Override
 	public Coordinate clone(){
 		try {
@@ -107,19 +129,26 @@ private int column;
 		return null;
 	}
 
+	/**{@inheritDoc}
+	 */
 	@Override
 	public String toString(){
 		char c = (char) (column + 'a');
 		return "(" + (row+1) + ";" + c + ")";
 	}
 
+	public String toString(boolean numeric){
+		if (numeric) {
+			return "(" + this.row + "," + this.column + ")";
+		}else{
+			return this.toString(),
+		}
+	}
 
 	public static void main(String[] args){
 
 		Chessboard scacchiera = new Chessboard();
 		scacchiera.printChessboard();
-
-
 	}
 
 }
