@@ -123,6 +123,7 @@ public class Chessboard {
 	private boolean isCheck(PieceColor color){
 
 		Coordinate myKing = locateKing(color);
+		
 		//TODO: come in {@link:Chessboard.isCheck()} quando non trova il re è un problema perchè teoricamente il gioco è finito
 		if (myKing == null)
 			return false;
@@ -144,6 +145,12 @@ public class Chessboard {
 		}
 
 		return result;
+	}
+
+	private boolean inCheckmate(King king){
+
+
+		return false;
 	}
 
 
@@ -169,18 +176,22 @@ public class Chessboard {
 
 			if (isCheck(originPiece.getSide())){
 				//if it's check then restore everythin
+				System.out.println("[" + move.toString() + "]" + "La mossa comporta uno scacco per il tuo re!");
 				placePiece(move.getOrigin(), originPiece);
 				placePiece(move.getDestination(),temPiece);
 
 				//TODO: send an error message saying : "scacco, mossa non valida"
 
 			}else{
+
+				System.out.println("[" + move.toString() + "]" + originPiece.toString() + "La mossa va bene, la faccio.");
 				//keep everything as it is
 				//TODO:return the correct message, send : "ok
 			}
 
 
 		}else{
+			System.out.println("[" + move.toString() + "]" + "La mossa non è consentita dal pezzo" + + ".");
 			//TODO: mandare messaggio : "non puoi andare qua"
 		}
 	}
@@ -217,7 +228,18 @@ public class Chessboard {
 	}
 
 
-	public void printChessboard() {
+	private List<Piece> getOpponentList(){
+		if ( color == PieceColor.WHITE) {
+			return blackList;
+		}else{
+			return whiteList;
+		}
+	}
+
+	/** Prints a list of the active
+		The list represents all the pieces and their possible moves
+	*/
+	public void printChessboardsMoves() {
 
 		Coordinate thisC = null;
 
@@ -239,4 +261,43 @@ public class Chessboard {
 			}
 		}
 	}
-}
+
+	/**Prints the chessboard status in th comand line interface
+	*/
+	public void printChessboard() {
+
+		Coordinate thisC = null;
+		// TODO: inserire i veri codici ansi per i colori
+		String colorW = "\u001B[32m"; //which is actually green
+		String colorB = "\u001B[36m";  //which is actually cyan
+		String color;
+		String endColor = "\u001B[0m";
+
+		//beginning of the function
+
+		System.out.println("\n-----------------------\n");
+
+		for (int i = 0; i < 8 ; i++) {
+			System.out.println("|")
+			for (int j = 0; j < 8; j++) {
+				System.out.println("|")
+				if (chessboard[i][j] != null){
+					//non sono sicuto chessboarhe queesto comando funzioni
+					thisC = chessboard[i][j];
+
+					if (thisC.getSide == PieceColor.WHITE) {
+						color = colorW;	
+					}else{
+						color = colorB;
+					}
+
+					System.out.println(" "+ color + thisC.getType().getSymbol.charAt(0) + endColor +" ")	
+				}else{
+					System.out.println("   |")
+				}
+			}
+			System.out.println("|\n-----------------------\n");
+		}
+	}
+
+}//endclass

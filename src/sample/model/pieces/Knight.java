@@ -9,7 +9,7 @@ import java.util.List;
 
 private class NotAccessibleException extends Exception{}
 
-/**
+/**Class representig the Knight piece
  * Created by Pietro on 25/10/2016.
  */
 public class Knight extends Piece{

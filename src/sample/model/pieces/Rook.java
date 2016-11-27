@@ -93,7 +93,7 @@ public class Rook extends Piece {
 				break;
 			}
 		}
-
+		
 		return possibleCoordinate;
 	}
 }

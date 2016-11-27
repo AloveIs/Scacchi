@@ -13,9 +13,11 @@ import java.util.ArrayList;
  * types of pieces will be derived.
  * See the classes
  * <b>{@link sample.model.pieces.Pawn}</b>,
- * <b>{@link sample.model}</b>,
- * <b>{@link sample.model}</b>,
- * <b>{@link sample.model}</b>,
+ * <b>{@link sample.model.pieces.King}</b>,
+ * <b>{@link sample.model.pieces.Knight}</b>,
+ * <b>{@link sample.model.pieces.Queen}</b>,
+ * <b>{@link sample.model.pieces.Bishop}</b>,
+ * <b>{@link sample.model.pieces.Rook}</b>,
  * @author Pietro Alovisi
  * @since 25-10-2016
  */

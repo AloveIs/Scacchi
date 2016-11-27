@@ -7,16 +7,21 @@ import sample.model.pieces.PieceColor;
  */
 public class Player {
 
-	private String name;
-	//TODO: final potrebbe non essere necessario in questo caso
+	private final String name;
+	//TODO: final potrebbe non essere necessario in questo caso perchè potrei fare più giochi consecutivi
 	private final PieceColor side;
-	private Chessboard chessboard;
+	private final Chessboard chessboard;
+
+	public Player (String name, PieceColor side){
+		this.name = name;
+		this.side = side;
+		this.chessboard = null;
+	}
 
 	public Player(String name, PieceColor side, Chessboard chessboard) {
 		this.name = name;
 		this.side = side;
 		this.chessboard = chessboard;
-
 	}
 
 	public String getName() {

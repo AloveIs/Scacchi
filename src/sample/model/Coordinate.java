@@ -1,7 +1,6 @@
 package sample.model;
 
 import sample.model.exception.CoordinateExceededException;
-
 import java.util.ArrayList;
 
 /** Class representic the coordinate in the chessboard.
@@ -146,7 +145,7 @@ private int column;
 	}
 
 	public static void main(String[] args){
-
+		
 		Chessboard scacchiera = new Chessboard();
 		scacchiera.printChessboard();
 	}

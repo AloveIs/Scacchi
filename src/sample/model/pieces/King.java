@@ -8,7 +8,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/**Class representig the King piece
  * Created by Pietro on 25/10/2016.
  */
 public class King extends Piece{
@@ -23,6 +23,16 @@ public class King extends Piece{
 		super(color, position, board);
 		this.type = PieceType.KING;
 		this.yetMoved = false;
+
+		//TODO: qualcosa come questo:
+		/*
+		public final Image img;
+		
+		...
+
+		this.img = new Image(this.type.getImgURL());
+
+		*/
 	}
 
 	/**{@inheritDoc}
@@ -33,7 +43,6 @@ public class King extends Piece{
 		ArrayList <Coordinate> possibleCoordinate = new ArrayList<>(4);
 		Coordinate cursor  = this.getPosition();
 		Piece piece = null;
-
 
 		for ( int i = -1 ; i < 2; i++) {
 			for ( int j = -1 ; j < 2; j++) {

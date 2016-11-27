@@ -7,7 +7,7 @@ import sample.model.exception.CoordinateExceededException;
 
 import java.util.ArrayList;
 
-/**
+/**Class representig the Bishop piece
  * Created by Pietro on 25/10/2016.
  */
 public class Bishop extends Piece{

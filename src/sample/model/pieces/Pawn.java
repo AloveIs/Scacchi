@@ -10,7 +10,7 @@ import java.util.List;
 
 
 
-/**
+/**Class representig the Pawn piece
  * Created by Pietro on 25/10/2016.
  */
 public class Pawn extends Piece{

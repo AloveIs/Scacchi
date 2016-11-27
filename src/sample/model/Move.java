@@ -42,4 +42,11 @@ public Coordinate getDestination(){
 	}
 
 
+	@Override
+	public String toString(){
+
+		return startPos.toString() + "->" + finalPos.toString();
+
+	}
+
 }
