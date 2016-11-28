@@ -27,6 +27,7 @@ public abstract class Piece {
 	protected PieceColor color;
 	protected Coordinate position;
 	protected Chessboard chessboard;
+	protected boolean yetMoved;
 
 		/*TODO: come impedire a un giocatore di fare mosse che comportano scacco? prima io farei
 	 la mossa e poi verificherei sulla scacchiera se è scacco, in modo da poi fare
@@ -44,6 +45,7 @@ public abstract class Piece {
 		this.color = color;
 		this.position = position;
 		this.chessboard = board;
+		this.yetMoved = false;
 	}
 
 
@@ -68,6 +70,10 @@ public abstract class Piece {
 
 	public PieceType getType() {
 		return type;
+	}
+
+	public void setYetMoved(){
+		this.yetMoved = true;
 	}
 
 	public Coordinate getPosition(){

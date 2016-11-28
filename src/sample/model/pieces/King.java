@@ -3,6 +3,7 @@ package sample.model.pieces;
 import sample.model.Chessboard;
 import sample.model.Coordinate;
 import sample.model.Move;
+import sample.model.exception.CoordinateExceededException;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -12,8 +13,6 @@ import java.util.List;
  * Created by Pietro on 25/10/2016.
  */
 public class King extends Piece{
-
-	@Override
 
 	private boolean yetMoved;
 
@@ -47,11 +46,12 @@ public class King extends Piece{
 		for ( int i = -1 ; i < 2; i++) {
 			for ( int j = -1 ; j < 2; j++) {
 				//TODO : portare questo schema anche negli altri pezzi
-				cursor = this.setCoordinate(this.position);
+				cursor.setCoordinate(this.position);
 				try{
-					piece = chessboard.getPiece(cursor.increase(i,j));
+					cursor.increase(i,j);
+					piece = chessboard.getPiece(cursor);
 					if (piece == null || this.ownedByOpponent(piece)) {
-						possibleCoordinate.add(cursor);
+						possibleCoordinate.add(cursor.clone());
 					}
 				}catch(CoordinateExceededException e) {}
 			}

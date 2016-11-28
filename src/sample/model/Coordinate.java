@@ -2,6 +2,7 @@ package sample.model;
 
 import sample.model.exception.CoordinateExceededException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /** Class representic the coordinate in the chessboard.
  * Created by Pietro on 22/10/2016.
@@ -23,6 +24,9 @@ private int column;
 		setCoordinate(row,column);
 	}
 
+	public Coordinate (int row, char col)throws CoordinateExceededException{
+		setCoordinate(row-1, ((int) col - 'a'));
+	}
 
 	public void setCoordinate(int row, int column)throws CoordinateExceededException{
 		if (row > 7 || row < 0 || column > 7 || column < 0 ) {
@@ -33,8 +37,8 @@ private int column;
 	}
 
 	public void setCoordinate(Coordinate coordinate){
-		this.row = coordinate.getRow;
-		this.column = coordinate.getColumn;
+		this.row = coordinate.getRow();
+		this.column = coordinate.getColumn();
 	}
 
 	public void setAsIndex(int index) throws CoordinateExceededException{
@@ -140,14 +144,38 @@ private int column;
 		if (numeric) {
 			return "(" + this.row + "," + this.column + ")";
 		}else{
-			return this.toString(),
+			return this.toString();
 		}
 	}
 
 	public static void main(String[] args){
-		
+
+		Scanner tastiera = new Scanner(System.in);
+		int a,c;
+		char b,d;
 		Chessboard scacchiera = new Chessboard();
 		scacchiera.printChessboard();
+	  	//scacchiera.printChessboardsMoves();
+
+		while (true){
+			System.out.print("Insert init 1: ");
+			a = tastiera.nextInt();
+			System.out.print("Insert init 2: ");
+			b = tastiera.next().charAt(0);
+
+			System.out.print("Insert final 1: ");
+			c = tastiera.nextInt();
+			System.out.print("Insert final 2: ");
+			d = tastiera.next().charAt(0);
+
+			try {
+				scacchiera.move(new Move(new Coordinate(a,(char) b),new Coordinate(c,(char) d)));
+			} catch (Exception e) {
+				System.err.println("Errore nella mossa" + a + b + c + d);
+				e.printStackTrace();
+			}
+			scacchiera.printChessboard();
+		}
 	}
 
 }

@@ -16,7 +16,7 @@ private Coordinate finalPos;
 	public Move (Coordinate startPos , Coordinate finalPos)throws Exception{
 
 		if (startPos == null || finalPos == null){
-		throw new Exception();
+			throw new Exception();
 		}
 
 		this.startPos = startPos;

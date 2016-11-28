@@ -63,35 +63,98 @@ public class Chessboard {
 		this.chessboard = new Piece[8][8];
 
 		try {
+
+			Piece p;
+			/*
 			placePiece(new Rook(PieceColor.WHITE, new Coordinate(1,4) , this));
-			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(5,4) , this));
 			placePiece(new Pawn(PieceColor.WHITE, new Coordinate(1,2), this));
+			placePiece(new King(PieceColor.WHITE, new Coordinate(1,3) , this));
+			placePiece(new Knight(PieceColor.WHITE, new Coordinate(0,0) , this));
+			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(2,1) , this));
 			placePiece(new Bishop(PieceColor.BLACK, new Coordinate(3,2), this));
 			placePiece(new Queen(PieceColor.BLACK, new Coordinate(3,6), this));
-			//placePiece(new Pawn(PieceColor.BLACK, new Coordinate(1,1), this));
+			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(1,1), this));
+
+			*/
+
+		//torri bianche
+			p = new Rook(PieceColor.WHITE,new Coordinate(0,0),this);
+			placePiece(p);
+			whiteList.add(p);
+			p = new Rook(PieceColor.WHITE,new Coordinate(0,7),this);
+			placePiece(p);
+			whiteList.add(p);
+		//torri nere
+			p = new Rook(PieceColor.BLACK,new Coordinate(7,0),this);
+			placePiece(p);
+			blackList.add(p);
+			p = new Rook(PieceColor.BLACK,new Coordinate(7,7),this);
+			placePiece(p);
+			blackList.add(p);
+
+		//cavalli bianchi
+			p = new Knight(PieceColor.WHITE,new Coordinate(0,1),this);
+			placePiece(p);
+			whiteList.add(p);
+			p = new Knight(PieceColor.WHITE,new Coordinate(0,6),this);
+			placePiece(p);
+			whiteList.add(p);
+		//cavalli neri
+			p = new Knight(PieceColor.BLACK,new Coordinate(7,1),this);
+			placePiece(p);
+			blackList.add(p);
+			p = new Knight(PieceColor.BLACK,new Coordinate(7,6),this);
+			placePiece(p);
+			blackList.add(p);
+
+		//alfieri bianchi
+			p = new Bishop(PieceColor.WHITE,new Coordinate(0,2),this);
+			placePiece(p);
+			whiteList.add(p);
+			p = new Bishop(PieceColor.WHITE,new Coordinate(0,5),this);
+			placePiece(p);
+			whiteList.add(p);
+		//alfieri neri
+			p = new Bishop(PieceColor.BLACK,new Coordinate(7,2),this);
+			placePiece(p);
+			blackList.add(p);
+			p = new Bishop(PieceColor.BLACK,new Coordinate(7,5),this);
+			placePiece(p);
+			blackList.add(p);
+
+		//re
+			p = new King(PieceColor.WHITE, new Coordinate(0,4),this);
+			placePiece(p);
+			whiteList.add(p);
+			p = new King(PieceColor.BLACK, new Coordinate(7,4),this);
+			placePiece(p);
+			blackList.add(p);
+		//regine
+			p = new Queen(PieceColor.WHITE, new Coordinate(0,3),this);
+			placePiece(p);
+			whiteList.add(p);
+			p = new Queen(PieceColor.BLACK, new Coordinate(7,3),this);
+			placePiece(p);
+			blackList.add(p);
+
+		//pedoni bianchi
+			for (int i = 0; i < 8; i++) {
+				Piece q = new Pawn(PieceColor.WHITE, new Coordinate(1,i), this);
+				placePiece(q);
+				whiteList.add(q);
+			}
+
+		//pedoni neri
+			for (int i = 0; i < 8; i++) {
+				Piece q = new Pawn(PieceColor.BLACK, new Coordinate(6,i), this);
+				placePiece(q);
+				blackList.add(q);
+			}
+
 		} catch (CoordinateExceededException e) {
+			System.err.println("Errore nell'inizializzazione della scacchiera.");
 			e.printStackTrace();
 		}
-	/*
-		for (int i = 0; i < 8; i++) {
-
-			//chessboard[1][i] = new Piece(PieceColor.BLACK);
-		}
-
-
-		//inizializzare tutti i pezzi
-
-
-		//INIZIALIZZAZIONE BIANCHI
-
-		for (int i = 0; i < 8; i++) {
-
-			chessboard[6][i] = null;
-		}
-
-		//INIZIALIZZAZIONE NERI
-
-	*/
 
 	}
 
@@ -123,12 +186,12 @@ public class Chessboard {
 	private boolean isCheck(PieceColor color){
 
 		Coordinate myKing = locateKing(color);
-		
-		//TODO: come in {@link:Chessboard.isCheck()} quando non trova il re è un problema perchè teoricamente il gioco è finito
-		if (myKing == null)
-			return false;
 
-		boolean result = false;
+		//TODO: come in {@link:Chessboard.isCheck()} quando non trova il re è un problema perchè teoricamente il gioco è finito
+		if (myKing == null) {
+			return false;
+		}
+
 
 		if (color == PieceColor.WHITE){
 			for (Piece p : this.blackList){
@@ -144,7 +207,7 @@ public class Chessboard {
 			}
 		}
 
-		return result;
+		return false;
 	}
 
 	private boolean inCheckmate(King king){
@@ -156,10 +219,10 @@ public class Chessboard {
 
 	//TODO: quewsto deve ritornare un messaggio per il giocatore per sapere se l'azione è andata a buon fine, o altrimenti perchè non è andata
 	//TODO: implementare lo yetMoved per i pezzi
+	//TODO: quando mangia togliere i pezzi dalla lista
 	public void move(Move move){
 
 		Piece originPiece = getPiece(move.getOrigin());
-
 
 		if (originPiece == null){
 			//TODO: lanciare eccezzione: "non è una mossa"
@@ -185,13 +248,14 @@ public class Chessboard {
 			}else{
 
 				System.out.println("[" + move.toString() + "]" + originPiece.toString() + "La mossa va bene, la faccio.");
+				originPiece.setYetMoved();
 				//keep everything as it is
 				//TODO:return the correct message, send : "ok
 			}
 
 
 		}else{
-			System.out.println("[" + move.toString() + "]" + "La mossa non è consentita dal pezzo" + + ".");
+			System.out.println("[" + move.toString() + "]" + "La mossa non è consentita dal pezzo" + originPiece + ".");
 			//TODO: mandare messaggio : "non puoi andare qua"
 		}
 	}
@@ -201,6 +265,12 @@ public class Chessboard {
 	}
 
 	private void placePiece(Coordinate position, Piece piece){
+		if (piece == null){
+
+			this.chessboard[position.getRow()][position.getColumn()] = null;
+
+			return;
+		}
 		piece.setPosition(position);
 		placePiece(piece);
 	}
@@ -228,7 +298,7 @@ public class Chessboard {
 	}
 
 
-	private List<Piece> getOpponentList(){
+	private List<Piece> getOpponentList(PieceColor color){
 		if ( color == PieceColor.WHITE) {
 			return blackList;
 		}else{
@@ -266,7 +336,7 @@ public class Chessboard {
 	*/
 	public void printChessboard() {
 
-		Coordinate thisC = null;
+		Piece thisP = null;
 		// TODO: inserire i veri codici ansi per i colori
 		String colorW = "\u001B[32m"; //which is actually green
 		String colorB = "\u001B[36m";  //which is actually cyan
@@ -274,29 +344,29 @@ public class Chessboard {
 		String endColor = "\u001B[0m";
 
 		//beginning of the function
-
-		System.out.println("\n-----------------------\n");
+		System.out.print("\n     a    b    c    d   e   f    g    h");
+		System.out.print("\n   --------------------------------------\n");
 
 		for (int i = 0; i < 8 ; i++) {
-			System.out.println("|")
+			System.out.print(" " + (i+1) + " |");
 			for (int j = 0; j < 8; j++) {
-				System.out.println("|")
+
 				if (chessboard[i][j] != null){
 					//non sono sicuto chessboarhe queesto comando funzioni
-					thisC = chessboard[i][j];
+					thisP = chessboard[i][j];
 
-					if (thisC.getSide == PieceColor.WHITE) {
+					if (thisP.getSide() == PieceColor.WHITE) {
 						color = colorW;	
 					}else{
 						color = colorB;
 					}
 
-					System.out.println(" "+ color + thisC.getType().getSymbol.charAt(0) + endColor +" ")	
+					System.out.print(" "+ color + thisP.getType().getUnicode() + endColor +" |");
 				}else{
-					System.out.println("   |")
+					System.out.print(" " + "\u001B[37m" + "\u2659" + "\u001B[0m" + " |");
 				}
 			}
-			System.out.println("|\n-----------------------\n");
+			System.out.print("\n   --------------------------------------\n");
 		}
 	}
 

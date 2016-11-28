@@ -8,20 +8,32 @@ public enum PieceType {
 
 	//TODO: sisteemare il fatto che non mi fa mettere oggetti di tipo immagine
 
-	KING("king", 	"king.png"),
-	QUEEN("queen", 	"queen.png"),
-	ROOK("rook", 	"rook.png"),	
-	BISHOP("bishop","bishop.png"),
-	KNIGHT("knight","knight.png"),
-	PAWN("pawn",	"pawn.png")	
+	KING("King", 	"king.png","\u2654"),
+	QUEEN("queen", 	"queen.png","\u2655"),
+	ROOK("rook", 	"rook.png", "\u2656"),
+	BISHOP("bishop","bishop.png", "\u2657"),
+	KNIGHT("knight","knight.png", "\u2658"),
+	PAWN("pawn",	"pawn.png", "\u2659")
 	;
+
+	/**
+	 * \u2654 " + // white king
+	 "\u2655" + // white queen
+	 "\u2656" + // white rook
+	 "\u2657" + // white bishop
+	 "\u2658" + // white knight
+	 "\u2659"
+	 *
+	 */
 
 	private String symbol;
 	private String imgURL;
+	private String unicode;
 
-	PieceType(String symbol, String img){
+	PieceType(String symbol, String img, String unicode){
 		this.symbol = symbol;
 		this.imgURL = img;
+		this.unicode = unicode;
 	}
 
 	/**Method to represent values by their name as strings.
@@ -36,5 +48,7 @@ public enum PieceType {
 	public String getImgURL(){
 		return this.imgURL;
 	}
+
+	public String getUnicode(){return this.unicode;}
 
 }

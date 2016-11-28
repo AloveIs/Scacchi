@@ -6,16 +6,12 @@ import sample.model.Move;
 import sample.model.exception.CoordinateExceededException;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 
 /**Class representig the Pawn piece
  * Created by Pietro on 25/10/2016.
  */
 public class Pawn extends Piece{
-
-	private boolean yetMoved;
 
 	/**{@inheritDoc}
 	 */
@@ -35,8 +31,6 @@ public class Pawn extends Piece{
 		Coordinate cursor  = this.getPosition();
 		Piece piece = null;
 
-		String ss = "\t\t\t";
-
 		if (this.color == PieceColor.WHITE ){
 			vIncrement = 1;
 		}else {
@@ -52,7 +46,7 @@ public class Pawn extends Piece{
 				possibleCoordinate.add(cursor.clone());
 
 				if (!yetMoved){
-					//FIXME: ridurre il volume delle istruzioni collassando insieme le istruzioni com in King
+					//FIXME: ridurre il volume delle istruzioni collassando insieme le istruzioni come in King
 					cursor.increaseVertical(vIncrement);
 					piece = chessboard.getPiece(cursor);
 					if( piece == null) {
@@ -62,7 +56,7 @@ public class Pawn extends Piece{
 			}
 		} catch (CoordinateExceededException e) {
 			//e.printStackTrace();
-			System.err.println(ss + position + "non puoi muoveri completamente in verticale");
+			//System.err.println(position + "non puoi muoveri completamente in verticale");
 		}
 		//need to reset the cursor because of the exception
 		//see if it can be possibleCoordinate to eat an opponent's piece
@@ -76,7 +70,7 @@ public class Pawn extends Piece{
 			}
 		} catch (CoordinateExceededException e){
 			//e.printStackTrace();
-			System.out.println(ss + cursor + "Non pui andare a dx e in verticale di " +vIncrement);
+			//System.out.println(cursor + "Non pui andare a dx e in verticale di " +vIncrement);
 		}
 
 		cursor = this.getPosition();
@@ -89,7 +83,7 @@ public class Pawn extends Piece{
 			}
 		}catch (CoordinateExceededException e){
 			//e.printStackTrace();
-			System.out.println(ss + cursor + "Non pui andare a sx e in verticale di " +vIncrement);
+			//System.out.println(cursor + "Non pui andare a sx e in verticale di " +vIncrement);
 		}
 		//TODO: scegliere se ritornare una lista vuoto o addirittura null
 		// preferirei una lista vuota
