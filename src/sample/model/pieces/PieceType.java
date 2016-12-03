@@ -1,10 +1,12 @@
 package sample.model.pieces;
 
+import java.io.Serializable;
+
 /**Enum Class to represent all the types of pieces in Chess, not distinguishing
  * between different color types
  * Created by Pietro on 22/10/2016.
  */
-public enum PieceType {
+public enum PieceType implements Serializable{
 
 	//TODO: sisteemare il fatto che non mi fa mettere oggetti di tipo immagine
 

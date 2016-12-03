@@ -6,6 +6,7 @@ import sample.model.Coordinate;
 import sample.model.Move;
 import sample.model.exception.CoordinateExceededException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /** This is the superclass representing
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * @author Pietro Alovisi
  * @since 25-10-2016
  */
-public abstract class Piece {
+public abstract class Piece implements Serializable{
 
 	protected PieceType type;
 	protected PieceColor color;

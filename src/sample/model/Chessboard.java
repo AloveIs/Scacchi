@@ -3,6 +3,7 @@ package sample.model;
 import sample.model.exception.CoordinateExceededException;
 import sample.model.pieces.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ import java.util.List;
  *
  * Created by Pietro Alovisi on 22/10/2016.
  */
-public class Chessboard {
+public class Chessboard implements Serializable{
 
 	/** The chessboard
 	 * The first index represents the row dimension.
@@ -221,7 +222,7 @@ public class Chessboard {
 	//TODO: implementare lo yetMoved per i pezzi
 	//TODO: quando mangia togliere i pezzi dalla lista
 	public void move(Move move){
-
+		System.out.println("Provo a fare la mossa : " + move);
 		Piece originPiece = getPiece(move.getOrigin());
 
 		if (originPiece == null){

@@ -2,13 +2,14 @@ package sample.model;
 
 import sample.model.pieces.Piece;
 
+import java.io.Serializable;
+
 /**
  * Created by Pietro on 22/10/2016.
  */
-public class Move{
+public class Move implements Serializable{
 
 
-private Chessboard chessBoard;
 private Coordinate startPos;
 private Coordinate finalPos;
 
@@ -31,14 +32,6 @@ private Coordinate finalPos;
 public Coordinate getDestination(){
 
 		return finalPos;
-	}
-
-	public boolean islegal(){
-
-		Piece startingPiece = chessBoard.getPiece(startPos);
-
-		//startingPiece.canGo(finalPos);
-		return true;
 	}
 
 

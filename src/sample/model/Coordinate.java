@@ -1,6 +1,8 @@
 package sample.model;
 
 import sample.model.exception.CoordinateExceededException;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,7 +10,7 @@ import java.util.Scanner;
  * Created by Pietro on 22/10/2016.
  */
 
-public class Coordinate {
+public class Coordinate implements Serializable{
 
 private int row;
 private int column;

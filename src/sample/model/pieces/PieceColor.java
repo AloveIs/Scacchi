@@ -1,9 +1,11 @@
 package sample.model.pieces;
 
+import java.io.Serializable;
+
 /**
  * Created by Pietro on 22/10/2016.
  */
-public enum PieceColor {
+public enum PieceColor implements Serializable{
 	BLACK("Nero"),
 	WHITE("Bianco");
 
