@@ -61,7 +61,7 @@ public class GameServer extends Thread {
 
 			try {
 				Move m = (Move) in.readObject();
-				chessboard.move(m);
+				//chessboard.move(m);
 				System.out.println("recived move : " + m);
 			} catch (IOException e) {
 				System.err.println("error reading into the socket");

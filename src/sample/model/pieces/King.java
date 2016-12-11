@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class King extends Piece{
 
-	private boolean yetMoved;
-
 	/**{@inheritDoc}
 	 */
 	public King(PieceColor color, Coordinate position, Chessboard board) {

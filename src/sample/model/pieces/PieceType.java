@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public enum PieceType implements Serializable{
 
-	//TODO: sisteemare il fatto che non mi fa mettere oggetti di tipo immagine
+	//TODO: sistemare il fatto che non mi fa mettere oggetti di tipo immagine
 
 	KING("King", 	"king.png","\u2654"),
 	QUEEN("queen", 	"queen.png","\u2655"),
@@ -17,16 +17,6 @@ public enum PieceType implements Serializable{
 	KNIGHT("knight","knight.png", "\u2658"),
 	PAWN("pawn",	"pawn.png", "\u2659")
 	;
-
-	/**
-	 * \u2654 " + // white king
-	 "\u2655" + // white queen
-	 "\u2656" + // white rook
-	 "\u2657" + // white bishop
-	 "\u2658" + // white knight
-	 "\u2659"
-	 *
-	 */
 
 	private String symbol;
 	private String imgURL;
@@ -51,6 +41,9 @@ public enum PieceType implements Serializable{
 		return this.imgURL;
 	}
 
+	/** Get the piece as an Unicode string
+	 * @return the unicode representation of the piece as a string
+	 */
 	public String getUnicode(){return this.unicode;}
 
 }

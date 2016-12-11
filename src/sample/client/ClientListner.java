@@ -6,6 +6,7 @@ import sample.model.Chessboard;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.SocketException;
 
 /**
  * Created by Pietro on 03/12/2016.
@@ -30,8 +31,12 @@ public class ClientListner extends Thread {
 				c = (Chessboard) in.readObject();
 				System.out.println("recieved msg");
 				c.printChessboard();
+			}catch (SocketException e){
+				System.err.println("Il server si è disconnesso");
+				break;
 			} catch (IOException e) {
 				e.printStackTrace();
+				break;
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

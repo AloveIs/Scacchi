@@ -11,7 +11,7 @@
          <image>
             <Image url="@provasf.png" />
          </image></ImageView>
-      <JFXButton styleClass="startScreenButton" />
-      <JFXButton styleClass="startScreenButton" />
+      <JFXButton text="Play" styleClass="startScreenButton" />
+      <JFXButton text="Option" styleClass="startScreenButton" />
    </children>
 </VBox>

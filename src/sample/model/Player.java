@@ -2,27 +2,21 @@ package sample.model;
 
 import sample.model.pieces.PieceColor;
 
+import java.io.Serializable;
+
 /**
  * Created by Pietro on 25/10/2016.
  */
 public class Player {
 
-	private final String name;
-	//TODO: final potrebbe non essere necessario in questo caso perchè potrei fare più giochi consecutivi
-	private final PieceColor side;
-	private final Chessboard chessboard;
+	private String name;
+	private PieceColor side;
 
-	public Player (String name, PieceColor side){
+	public Player(String name, PieceColor side){
 		this.name = name;
 		this.side = side;
-		this.chessboard = null;
 	}
 
-	public Player(String name, PieceColor side, Chessboard chessboard) {
-		this.name = name;
-		this.side = side;
-		this.chessboard = chessboard;
-	}
 
 	public String getName() {
 		return name;
@@ -32,4 +26,8 @@ public class Player {
 		return side;
 	}
 
+	@Override
+	public String toString() {
+		return name + "|" + side.toString();
+	}
 }

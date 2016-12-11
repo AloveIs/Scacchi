@@ -171,7 +171,7 @@ private int column;
 			d = tastiera.next().charAt(0);
 
 			try {
-				scacchiera.move(new Move(new Coordinate(a,(char) b),new Coordinate(c,(char) d)));
+				//scacchiera.move(new Move(new Coordinate(a,(char) b),new Coordinate(c,(char) d)));
 			} catch (Exception e) {
 				System.err.println("Errore nella mossa" + a + b + c + d);
 				e.printStackTrace();

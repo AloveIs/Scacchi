@@ -18,4 +18,12 @@ public enum PieceColor implements Serializable{
 	public String toString(){
 		return this.symbol;
 	}
+
+	static public PieceColor getOtherSide(PieceColor p){
+		if (p == WHITE){
+			return BLACK;
+		}else{
+			return WHITE;
+		}
+	}
 }

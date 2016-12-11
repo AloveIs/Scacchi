@@ -54,8 +54,6 @@ public class Chessboard implements Serializable{
 	private Piece[][] chessboard;	//the board used in the game
 
 
-	//FIXME: da vedere se sono strettamente necessarie
-
 	private List<Piece> blackList = new ArrayList<>(16);
 	private List<Piece> whiteList = new ArrayList<>(16);
 
@@ -64,19 +62,7 @@ public class Chessboard implements Serializable{
 		this.chessboard = new Piece[8][8];
 
 		try {
-
 			Piece p;
-			/*
-			placePiece(new Rook(PieceColor.WHITE, new Coordinate(1,4) , this));
-			placePiece(new Pawn(PieceColor.WHITE, new Coordinate(1,2), this));
-			placePiece(new King(PieceColor.WHITE, new Coordinate(1,3) , this));
-			placePiece(new Knight(PieceColor.WHITE, new Coordinate(0,0) , this));
-			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(2,1) , this));
-			placePiece(new Bishop(PieceColor.BLACK, new Coordinate(3,2), this));
-			placePiece(new Queen(PieceColor.BLACK, new Coordinate(3,6), this));
-			placePiece(new Pawn(PieceColor.BLACK, new Coordinate(1,1), this));
-
-			*/
 
 		//torri bianche
 			p = new Rook(PieceColor.WHITE,new Coordinate(0,0),this);
@@ -184,16 +170,33 @@ public class Chessboard implements Serializable{
 		return null;
 	}
 
-	private boolean isCheck(PieceColor color){
+	public void printLists(){
+		System.out.println("white:");
+		for (Piece p : whiteList){
+			System.out.println(p);
+		}
+		System.out.println("black:");
+		for (Piece p : blackList){
+			System.out.println(p);
+		}
+
+	}
+
+
+	boolean hasMadeCheck(PieceColor color){
+		return isCheck(PieceColor.getOtherSide(color));
+	}
+
+	boolean isCheck(PieceColor color){
 
 		Coordinate myKing = locateKing(color);
 
 		//TODO: come in {@link:Chessboard.isCheck()} quando non trova il re è un problema perchè teoricamente il gioco è finito
 		if (myKing == null) {
+			System.exit(57);
 			return false;
 		}
-
-
+		printLists();
 		if (color == PieceColor.WHITE){
 			for (Piece p : this.blackList){
 				if (p.canGo(myKing)){
@@ -211,53 +214,81 @@ public class Chessboard implements Serializable{
 		return false;
 	}
 
-	private boolean inCheckmate(King king){
+	/** Check if the current player has made a checkmate
+	 *
+	 * @param color color of the current player
+	 * @return true if we made checkmate onto the opponent's king
+	 */
 
+	public boolean hasMadeCheckmate(PieceColor color){
 
-		return false;
+		PieceColor opponentColor;
+
+		if (color == PieceColor.WHITE){
+			opponentColor = PieceColor.BLACK;
+		}else{
+			opponentColor = PieceColor.WHITE;
+		}
+
+		ArrayList<Piece> myList = (ArrayList<Piece>) getOpponentList(opponentColor);
+		ArrayList<Piece> opponentList = (ArrayList<Piece>) getOpponentList(color);
+
+//		Coordinate coOpponentKing = locateKing(opponentColor);
+//		Piece opponentKing = getPiece(coOpponentKing);
+		Move m;
+
+		//provo tutte le mosse possibili dell'opponent
+		for (Piece piece : opponentList){
+			for (Coordinate finalpos : piece.accessiblePositions()){
+				try {
+					m = new Move(piece.getPosition(), finalpos);
+					if (avoidsCheck(m, piece, myList)){
+						return false;
+					}
+				} catch (Exception e) {
+					System.err.println("CAUGHT HERE MADAFUCKA!");
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return true;
 	}
 
 
-	//TODO: quewsto deve ritornare un messaggio per il giocatore per sapere se l'azione è andata a buon fine, o altrimenti perchè non è andata
-	//TODO: implementare lo yetMoved per i pezzi
-	//TODO: quando mangia togliere i pezzi dalla lista
-	public void move(Move move){
-		System.out.println("Provo a fare la mossa : " + move);
-		Piece originPiece = getPiece(move.getOrigin());
 
-		if (originPiece == null){
-			//TODO: lanciare eccezzione: "non è una mossa"
-		}
+	private boolean avoidsCheck(Move move, Piece originPiece, ArrayList<Piece> opponentList){
 
-		if (originPiece.canGo(move.getDestination())){
+		System.out.println("Dummy move : " + move + originPiece);
 
-			Piece temPiece = this.getPiece(move.getDestination());
-			//make the move
-			placePiece(move.getDestination(),originPiece);
-			placePiece(move.getOrigin(), null);
+		Piece temPiece = this.getPiece(move.getDestination());
+		//make the move
+		placePiece(move.getDestination(),originPiece);
+		placePiece(move.getOrigin(), null);
+		opponentList.remove(temPiece);
+		//check if my king is menaced by some piece
 
-			//check if is check
-
-			if (isCheck(originPiece.getSide())){
-				//if it's check then restore everythin
-				System.out.println("[" + move.toString() + "]" + "La mossa comporta uno scacco per il tuo re!");
-				placePiece(move.getOrigin(), originPiece);
-				placePiece(move.getDestination(),temPiece);
-
-				//TODO: send an error message saying : "scacco, mossa non valida"
-
-			}else{
-
-				System.out.println("[" + move.toString() + "]" + originPiece.toString() + "La mossa va bene, la faccio.");
-				originPiece.setYetMoved();
-				//keep everything as it is
-				//TODO:return the correct message, send : "ok
+		if (isCheck(originPiece.getSide())){
+			//if it's check then restore everything
+			System.out.println("[" + move.toString() + "]" + "La mossa comporta ancora uno scacco per il re.");
+			placePiece(move.getOrigin(), originPiece);
+			placePiece(move.getDestination(),temPiece);
+			if (temPiece != null) {
+				opponentList.add(temPiece);
 			}
 
+			return false;
 
 		}else{
-			System.out.println("[" + move.toString() + "]" + "La mossa non è consentita dal pezzo" + originPiece + ".");
-			//TODO: mandare messaggio : "non puoi andare qua"
+
+			System.out.println("[" + move.toString() + "]" + originPiece.toString() + "La mossa mi evita lo scacco, non è matto.");
+			placePiece(move.getOrigin(), originPiece);
+			placePiece(move.getDestination(),temPiece);
+			if (temPiece != null) {
+				opponentList.add(temPiece);
+			}
+
+			return true;
 		}
 	}
 
@@ -265,7 +296,7 @@ public class Chessboard implements Serializable{
 		this.chessboard[piece.getPosition().getRow()][piece.getPosition().getColumn()] = piece;
 	}
 
-	private void placePiece(Coordinate position, Piece piece){
+	public void placePiece(Coordinate position, Piece piece){
 		if (piece == null){
 
 			this.chessboard[position.getRow()][position.getColumn()] = null;
@@ -276,12 +307,11 @@ public class Chessboard implements Serializable{
 		placePiece(piece);
 	}
 
-	private boolean placePiece(int row, int column, Piece piece) throws CoordinateExceededException {
+	public void placePiece(int row, int column, Piece piece) throws CoordinateExceededException {
 
 		piece.setPosition(row,column);
 		placePiece(piece);
 
-		return true;
 	}
 
 
@@ -298,18 +328,23 @@ public class Chessboard implements Serializable{
 		return chessboard[coo.getRow()][coo.getColumn()];
 	}
 
-
-	private List<Piece> getOpponentList(PieceColor color){
-		if ( color == PieceColor.WHITE) {
+	/**Return the list of the opponent's active pieces
+	 *
+	 * @param mycolor the color of the player's team
+	 * @return list of active pieces of the player with the opposite color of mycolor
+	 */
+	public List<Piece> getOpponentList(PieceColor mycolor){
+		if ( mycolor == PieceColor.WHITE) {
 			return blackList;
 		}else{
 			return whiteList;
 		}
 	}
 
-	/** Prints a list of the active
-		The list represents all the pieces and their possible moves
-	*/
+	/** Prints a list of the active Pieces
+	 * The list represents all the pieces and their possible moves
+	 * in a comnad line manner.
+	 */
 	public void printChessboardsMoves() {
 
 		Coordinate thisC = null;
@@ -333,7 +368,7 @@ public class Chessboard implements Serializable{
 		}
 	}
 
-	/**Prints the chessboard status in th comand line interface
+	/**Prints the chessboard status in the comand line interface
 	*/
 	public void printChessboard() {
 
@@ -362,9 +397,11 @@ public class Chessboard implements Serializable{
 						color = colorB;
 					}
 
-					System.out.print(" "+ color + thisP.getType().getUnicode() + endColor +" |");
+					System.out.print(color + " " + thisP.getType().getUnicode() + " " + endColor +"|");
+
 				}else{
-					System.out.print(" " + "\u001B[37m" + "\u2659" + "\u001B[0m" + " |");
+
+					System.out.print("\u001B[37m" + " " + "\u2659" + " " + "\u001B[0m|");
 				}
 			}
 			System.out.print("\n   --------------------------------------\n");
@@ -372,3 +409,48 @@ public class Chessboard implements Serializable{
 	}
 
 }//endclass
+
+/*
+	//TODO: quewsto deve ritornare un messaggio per il giocatore per sapere se l'azione è andata a buon fine, o altrimenti perchè non è andata
+	//TODO: implementare lo yetMoved per i pezzi
+	//TODO: quando mangia togliere i pezzi dalla lista
+	private void move(Move move){
+		System.out.println("Provo a fare la mossa : " + move);
+		Piece originPiece = getPiece(move.getOrigin());
+
+		if (originPiece == null){
+			//TODO: lanciare eccezzione: "non è una mossa"
+		}
+
+		if (originPiece.canGo(move.getDestination())){
+
+			Piece temPiece = this.getPiece(move.getDestination());
+			//make the move
+			placePiece(move.getDestination(),originPiece);
+			placePiece(move.getOrigin(), null);
+
+			//check if my king is menaced by some piece
+
+			if (isCheck(originPiece.getSide())){
+				//if it's check then restore everything
+				System.out.println("[" + move.toString() + "]" + "La mossa comporta uno scacco per il tuo re!");
+				placePiece(move.getOrigin(), originPiece);
+				placePiece(move.getDestination(),temPiece);
+
+				//TODO: send an error message saying : "scacco, mossa non valida"
+
+			}else{
+
+				System.out.println("[" + move.toString() + "]" + originPiece.toString() + "La mossa va bene, la faccio.");
+				originPiece.setYetMoved();
+				//keep everything as it is
+				//TODO:return the correct message, send : "ok
+			}
+
+
+		}else{
+			System.out.println("[" + move.toString() + "]" + "La mossa non è consentita dal pezzo" + originPiece + ".");
+			//TODO: mandare messaggio : "non puoi andare qua"
+		}
+	}
+ */
