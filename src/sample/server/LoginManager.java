@@ -58,14 +58,12 @@ public class LoginManager extends Thread{
 
 				if (msg instanceof LoginMessage) {
 					LoginMessage loginMsg = (LoginMessage) msg;
-					p = new ServerPlayer(loginMsg.getPlayer(), clientSocket);
+					p = new ServerPlayer(loginMsg.getPlayer(), clientSocket, inputReader , outputWriter);
 					pPool.add(p);
 					outputWriter.println(messageHandler.toJson(new ValidLoginMessage(pPool.toString()), Message.class));
-					sucLog(messageHandler.toJson(new ValidLoginMessage(pPool.toString()), Message.class));
+					sucLog("Send : " + messageHandler.toJson(new ValidLoginMessage(pPool.toString()), Message.class));
 					outputWriter.flush();
-					sucLog("Sendt prev message");
-					outputWriter.close();
-					in.close();
+
 					break;
 				} else {
 					outputWriter.print(messageHandler.toJson(new InvalidLoginMessage("Some parameters are wrong!"), Message.class));

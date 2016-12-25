@@ -1,4 +1,4 @@
-package sample.model;
+package sample.model.exception;
 
 /**
  * Created by Pietro on 22/10/2016.

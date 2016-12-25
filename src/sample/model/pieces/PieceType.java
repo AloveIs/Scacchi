@@ -10,12 +10,12 @@ public enum PieceType implements Serializable{
 
 	//TODO: sistemare il fatto che non mi fa mettere oggetti di tipo immagine
 
-	KING("King", 	"king.png","\u2654"),
-	QUEEN("queen", 	"queen.png","\u2655"),
-	ROOK("rook", 	"rook.png", "\u2656"),
-	BISHOP("bishop","bishop.png", "\u2657"),
-	KNIGHT("knight","knight.png", "\u2658"),
-	PAWN("pawn",	"pawn.png", "\u2659")
+	KING("King", 	"King.png","\u2654"),
+	QUEEN("queen", 	"Queen.png","\u2655"),
+	ROOK("rook", 	"Rook.png", "\u2656"),
+	BISHOP("bishop","Bishop.png", "\u2657"),
+	KNIGHT("knight","Knight.png", "\u2658"),
+	PAWN("pawn",	"Pawn.png", "\u2659")
 	;
 
 	private String symbol;

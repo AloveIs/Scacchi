@@ -19,4 +19,10 @@ public class GameHandler extends Thread {
 		this.moveController = new MoveController();
 	}
 
+
+	public void action(){
+
+
+
+	}
 }

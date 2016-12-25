@@ -4,7 +4,7 @@
     -fx-pref-height: 105;
     -fx-pref-width: 346;
     -fx-text-fill: #fc002b;
-    -fx-padding: 50 0 50 0;
+    -fx-padding: 300 0 300 0;
 
 }
 .startScreenButton{
@@ -18,13 +18,14 @@
 }
 
 .button{
+    display: none;
     -fx-alignment: center;
 }
 
 #vboxStartScreen{
     -fx-spacing: 30px;
     -fx-alignment: center;
-    -fx-background-image: url("sfondo1.jpg");
+    -fx-background-image: url("sfondo2.jpg");
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
 }

@@ -1,0 +1,85 @@
+.SplitPane{
+    -fx-background-color: #ffffff;
+}
+#gameBorderPane{
+    -fx-background-color: rgba(166, 61, 40, 0.99);
+    /*
+    -fx-background-color: rgba(12, 96, 33, 0.99);
+    -fx-background-image: url("./triangle.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+    */
+}
+
+#board{
+    -fx-border-style: solid;
+    -fx-border-color: gray;
+    -fx-border-width: 3px;
+
+}
+.evenSquares{
+    /*-fx-background-color: rgba(168, 78, 16, 0.99);  marroncione */
+    /*-fx-background-color: rgba(168, 78, 16, 0.99);*/
+    -fx-background-color: rgb(135, 129, 120);
+
+
+}
+
+.oddSquares{
+    /*-fx-background-color: rgba(249, 252, 255, 0.99); blanco  */
+    /*-fx-background-color: rgba(255, 231, 152, 0.99);*/
+    -fx-background-color: rgb(82, 78, 67);
+}
+
+
+.square:hover{
+    -fx-background-color: rgb(255, 231, 152);
+}
+
+.userNameLabel{
+    -fx-font-size: 28pt;
+    -fx-font-family: "Futura";
+    -fx-font-weight: bolder;
+}
+
+/* Style of the highlighted cells
+*/
+.highlighted{
+    -fx-background-color: rgb(57, 139, 121);
+}
+
+
+/* ########### this class si not working whatsoever use the two below
+#notifyer{
+    -fx-background-color: rgb(57, 139, 121);
+    -fx-fill: whitesmoke;
+}
+*/
+
+/* Style of the notification bar popping from the bottom of the screen*/
+.jfx-snackbar-content {
+    -fx-background-color: rgb(36, 36, 36);
+}
+
+/* Style of the notification bar popping from the bottom of the screen
+*/
+.jfx-snackbar-toast {
+    -fx-font-weight: bolder;
+    -fx-font-size: 18px;
+    -fx-text-fill: whitesmoke;
+}
+
+/*The style that the nae of the
+  current player has
+*/
+.onTurn{
+    -fx-background-color: #ff008b;
+}
+
+/*Style for the button in the popup box
+*/
+.popupButton{
+    -fx-background-color: #262626;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

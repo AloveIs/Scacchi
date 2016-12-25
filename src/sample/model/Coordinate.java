@@ -30,6 +30,14 @@ private int column;
 		setCoordinate(row-1, ((int) col - 'a'));
 	}
 
+	public Coordinate(int index) {
+		try {
+			setCoordinate(index/8, index%8);
+		} catch (CoordinateExceededException e) {
+			System.err.println("Error in the range of the index" + index);
+		}
+	}
+
 	public void setCoordinate(int row, int column)throws CoordinateExceededException{
 		if (row > 7 || row < 0 || column > 7 || column < 0 ) {
 			throw new CoordinateExceededException();
@@ -157,7 +165,6 @@ private int column;
 		char b,d;
 		Chessboard scacchiera = new Chessboard();
 		scacchiera.printChessboard();
-	  	//scacchiera.printChessboardsMoves();
 
 		while (true){
 			System.out.print("Insert init 1: ");

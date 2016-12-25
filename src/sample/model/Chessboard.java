@@ -193,10 +193,11 @@ public class Chessboard implements Serializable{
 
 		//TODO: come in {@link:Chessboard.isCheck()} quando non trova il re è un problema perchè teoricamente il gioco è finito
 		if (myKing == null) {
+			//todo: set thi exit better
 			System.exit(57);
 			return false;
 		}
-		printLists();
+		//printLists();
 		if (color == PieceColor.WHITE){
 			for (Piece p : this.blackList){
 				if (p.canGo(myKing)){
@@ -236,7 +237,7 @@ public class Chessboard implements Serializable{
 //		Coordinate coOpponentKing = locateKing(opponentColor);
 //		Piece opponentKing = getPiece(coOpponentKing);
 		Move m;
-
+		//todo: migliorare a soltanto le mosse che veramente servono controllare
 		//provo tutte le mosse possibili dell'opponent
 		for (Piece piece : opponentList){
 			for (Coordinate finalpos : piece.accessiblePositions()){
@@ -259,8 +260,7 @@ public class Chessboard implements Serializable{
 
 	private boolean avoidsCheck(Move move, Piece originPiece, ArrayList<Piece> opponentList){
 
-		System.out.println("Dummy move : " + move + originPiece);
-
+		//System.out.println("Dummy move : " + move + originPiece);
 		Piece temPiece = this.getPiece(move.getDestination());
 		//make the move
 		placePiece(move.getDestination(),originPiece);
@@ -270,7 +270,7 @@ public class Chessboard implements Serializable{
 
 		if (isCheck(originPiece.getSide())){
 			//if it's check then restore everything
-			System.out.println("[" + move.toString() + "]" + "La mossa comporta ancora uno scacco per il re.");
+			//System.out.println("[" + move.toString() + "]" + "La mossa comporta ancora uno scacco per il re.");
 			placePiece(move.getOrigin(), originPiece);
 			placePiece(move.getDestination(),temPiece);
 			if (temPiece != null) {
@@ -281,7 +281,8 @@ public class Chessboard implements Serializable{
 
 		}else{
 
-			System.out.println("[" + move.toString() + "]" + originPiece.toString() + "La mossa mi evita lo scacco, non è matto.");
+			//in this case the move avoid check, so it isn't checkmate
+			//System.out.println("[" + move.toString() + "]" + originPiece.toString() + "La mossa mi evita lo scacco, non è matto.");
 			placePiece(move.getOrigin(), originPiece);
 			placePiece(move.getDestination(),temPiece);
 			if (temPiece != null) {
@@ -311,9 +312,21 @@ public class Chessboard implements Serializable{
 
 		piece.setPosition(row,column);
 		placePiece(piece);
-
 	}
 
+
+	public Piece getPiece(int index){
+
+		if (index > 63 || index < 0){
+			System.err.println("Stai andando oltre");
+			return null;
+		}
+
+		int row = index / 8;
+		int col = index % 8;
+
+		return chessboard[row][col];
+	}
 
 	public Piece getPiece(int row, int col) throws CoordinateExceededException{
 
@@ -368,7 +381,7 @@ public class Chessboard implements Serializable{
 		}
 	}
 
-	/**Prints the chessboard status in the comand line interface
+	/**Prints the chessboard status in the command line interface
 	*/
 	public void printChessboard() {
 
@@ -411,7 +424,7 @@ public class Chessboard implements Serializable{
 }//endclass
 
 /*
-	//TODO: quewsto deve ritornare un messaggio per il giocatore per sapere se l'azione è andata a buon fine, o altrimenti perchè non è andata
+	//TODO: questo deve ritornare un messaggio per il giocatore per sapere se l'azione è andata a buon fine, o altrimenti perchè non è andata
 	//TODO: implementare lo yetMoved per i pezzi
 	//TODO: quando mangia togliere i pezzi dalla lista
 	private void move(Move move){

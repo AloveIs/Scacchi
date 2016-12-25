@@ -15,8 +15,8 @@ public class PlayerPool extends Thread{
 	public volatile static boolean verbose = false;
 	private static PlayerPool playerPool = null;
 
-	private ArrayList<ServerPlayer> whites;
-	private ArrayList<ServerPlayer> blacks;
+	private volatile ArrayList<ServerPlayer> whites;
+	private volatile ArrayList<ServerPlayer> blacks;
 
 	private PlayerPool(){
 
@@ -62,13 +62,6 @@ public class PlayerPool extends Thread{
 	}
 
 	private void clean(){
-
-		whites.stream().filter(ServerPlayer::isClosed).forEach(p -> {
-			whites.remove(p);
-		});
-		blacks.stream().filter(ServerPlayer::isClosed).forEach(p -> {
-			blacks.remove(p);
-		});
 
 		while(whites.remove(null));
 		while(blacks.remove(null));
