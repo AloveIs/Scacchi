@@ -354,6 +354,11 @@ public class Chessboard implements Serializable{
 		}
 	}
 
+	public void rootMove(Move m){
+		placePiece(m.getDestination(), getPiece(m.getOrigin()));
+		placePiece(m.getOrigin(), null);
+	}
+
 	/** Prints a list of the active Pieces
 	 * The list represents all the pieces and their possible moves
 	 * in a comnad line manner.

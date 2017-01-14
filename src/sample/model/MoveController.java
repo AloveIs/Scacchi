@@ -3,6 +3,8 @@ package sample.model;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import sample.model.exception.CoordinateExceededException;
 import sample.model.messages.Message;
+import sample.model.messages.MessageMove;
+import sample.model.messages.NonValidMoveMessage;
 import sample.model.pieces.Piece;
 import sample.model.pieces.PieceColor;
 
@@ -81,13 +83,13 @@ public class MoveController {
 			// the origin cell is empty, no piece to move
 			//System.err.println("Mossa non consentita, pezzo non presente");
 			//TODO: lanciare eccezzione: "non è una mossa"
-			return new Message(NONVALID, "La casella di origine è vuota!");
+			return new NonValidMoveMessage(NONVALID, "La casella di origine è vuota!");
 		}
 
 		//check if the piece is compatible with the turn
 		if (originPiece.getSide() != turn){
 			//TODO: caso turno sbagliato
-			return new Message(NONVALID, "Non è il tuto turno!");
+			return new NonValidMoveMessage(NONVALID, "Non è il tuo turno!");
 		}
 
 		// ... else see if the move is valid :
@@ -116,7 +118,7 @@ public class MoveController {
 					listOpp.add(temPiece);
 				}
 				//move non valid, the player's king is under check
-				return new Message(NONVALID, "La mossa mette in scacco il tuo re!");
+				return new NonValidMoveMessage(NONVALID, "La mossa mette in scacco il tuo re!");
 				//TODO: send an error message saying : "scacco, mossa non valida"
 
 			}else{
@@ -144,7 +146,7 @@ public class MoveController {
 				}else{
 					//The move is valid, no check involved, i'll ma it
 					swapTurn();
-					return new Message(VALID, null);
+					return new MessageMove(VALID,move,turn);
 					//TODO:return the correct message, send : "ok" la mossa va bene nessuno scacco
 				}
 			}
@@ -154,7 +156,7 @@ public class MoveController {
 			//System.out.println("[" + move.toString() + "]" + "La mossa non è consentita dal pezzo" + originPiece + ".");
 			//System.err.println("La mossa non è consentita dal pezzo");
 
-			return new Message(NONVALID, "La mossa non è consentida dal pezzo!");
+			return new NonValidMoveMessage("La mossa non è consentida dal pezzo!");
 			// /TODO: mandare messaggio : "non puoi andare qua"
 		}
 
@@ -191,6 +193,10 @@ public class MoveController {
 	 */
 	public Chessboard getChessboard() {
 		return chessboard;
+	}
+
+	public void setTurn(PieceColor turn) {
+		this.turn = turn;
 	}
 
 

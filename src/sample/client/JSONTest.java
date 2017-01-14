@@ -25,7 +25,6 @@ public class JSONTest {
 			list.add(r);
 			list.add(k);
 
-
 		Gson gson = new GsonBuilder().registerTypeAdapter(Message.class, new JSONCodecManager<Message>()).create();
 
 		String msg = gson.toJson(r, Message.class);

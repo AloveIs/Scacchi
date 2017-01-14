@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 
-public class PlayerPool extends Thread{
+public class PlayerPool {
 
 	public volatile static boolean verbose = false;
 	private static PlayerPool playerPool = null;
@@ -22,9 +22,6 @@ public class PlayerPool extends Thread{
 
 		whites = new ArrayList<>();
 		blacks = new ArrayList<>();
-		this.setDaemon(true);
-		this.setName("PlayerPoolThread");
-		this.start();
 	}
 
 	public static PlayerPool getInstance() {
@@ -55,9 +52,13 @@ public class PlayerPool extends Thread{
 			System.out.println("Inserito il giocatore "+ p + " ma non ci sono partite disponibili");
 		}else{
 			System.out.println("faccio partire la partita tra " + whites.get(0) + " e " + blacks.get(0));
+
+			//TODO: FAR PARTIRE UN  DI GIOCO
+			new GameServer(whites.get(0), blacks.get(0));
+			whites.get(0).send("ciao");
+			blacks.get(0).send("ciao");
 			whites.remove(0);
 			blacks.remove(0);
-			//TODO: FAR PARTIRE UN THREAD DI GIOCO
 		}
 	}
 

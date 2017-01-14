@@ -1,15 +1,30 @@
+/** ###############
+
+    PALETTTE
+
+    	#24446e	(36,68,110)
+        #cd5c5c	(205,92,92)
+        #ded6b4	(222,214,180)
+        #40282b	(64,40,43)
+        #12123d	(18,18,61)
+
+*/
+
 .SplitPane{
     -fx-background-color: #ffffff;
 }
+
+/*
 #gameBorderPane{
-    -fx-background-color: rgba(166, 61, 40, 0.99);
+    -fx-background-color: rgb(166, 61, 40);
+
     /*
     -fx-background-color: rgba(12, 96, 33, 0.99);
     -fx-background-image: url("./triangle.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
     */
-}
+/*}*/
 
 #board{
     -fx-border-style: solid;
@@ -20,15 +35,17 @@
 .evenSquares{
     /*-fx-background-color: rgba(168, 78, 16, 0.99);  marroncione */
     /*-fx-background-color: rgba(168, 78, 16, 0.99);*/
-    -fx-background-color: rgb(135, 129, 120);
-
-
+    /*-fx-background-color: rgb(135, 129, 120);   /*########GRIGINO*/
+    /*-fx-background-color: #F5F5DC;    ####2*/
+    -fx-background-color: #fafafa;
 }
 
 .oddSquares{
     /*-fx-background-color: rgba(249, 252, 255, 0.99); blanco  */
     /*-fx-background-color: rgba(255, 231, 152, 0.99);*/
-    -fx-background-color: rgb(82, 78, 67);
+    /*-fx-background-color: rgb(82, 78, 67);  /*########GRIGIONE*/
+    /*-fx-background-color: 	#a5682a;     ####2*/
+    -fx-background-color: #926a47;
 }
 
 
@@ -58,7 +75,8 @@
 
 /* Style of the notification bar popping from the bottom of the screen*/
 .jfx-snackbar-content {
-    -fx-background-color: rgb(36, 36, 36);
+    /*-fx-background-color: rgb(36, 36, 36);*/
+    -fx-background-color: #0d9fff;
 }
 
 /* Style of the notification bar popping from the bottom of the screen
@@ -73,13 +91,29 @@
   current player has
 */
 .onTurn{
-    -fx-background-color: #ff008b;
+    -fx-background-color: rgb(199, 127, 83);
 }
 
+/*Buttons on the left of the screen*/
+.actionButton{
+    -fx-background-color: #262626;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
 /*Style for the button in the popup box
 */
 .popupButton{
     -fx-background-color: #262626;
     -fx-text-fill: white;
     -fx-font-weight: bold;
+}
+
+/*
+*/
+.whiteTurn{
+    -fx-background-color: #262626;
+}
+.blackTurn{
+    -fx-background-color: white;
 }

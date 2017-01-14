@@ -5,9 +5,9 @@ package sample.model.messages;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
-/**
- * Created by Pietro on 08/12/2016.
- */
+
+
+
 public class JSONCodecManager<T> implements JsonSerializer<T>, JsonDeserializer<T> {
 
 	@Override

@@ -14,4 +14,8 @@ public ValidLoginMessage(){
 		super(ActionType.SPECIAL, message);
 	}
 
+	@Override
+	public void haveEffect() {
+		super.haveEffect();
+	}
 }

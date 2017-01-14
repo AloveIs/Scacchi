@@ -5,13 +5,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="vboxStartScreen" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@launchScreen.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<VBox id="vboxStartScreen" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@launchScreen.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.StartScreenController">
    <children>
       <ImageView fitHeight="200.0" fitWidth="668.0" pickOnBounds="true" preserveRatio="true" style="-fx-translate-y: -100;">
          <image>
             <Image url="@ATTEMPT1.png" />
          </image></ImageView>
-      <JFXButton styleClass="startScreenButton" text="Play" />
-      <JFXButton styleClass="startScreenButton" text="Option" />
+      <JFXButton fx:id="playOnlineButton" styleClass="startScreenButton" text="Play" />
+      <JFXButton fx:id="playLocallyButton" styleClass="startScreenButton" text="Option" />
    </children>
 </VBox>

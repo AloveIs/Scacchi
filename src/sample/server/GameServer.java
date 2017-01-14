@@ -1,78 +1,75 @@
 package sample.server;
 
-import sample.model.Chessboard;
-import sample.model.Game;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import sample.model.ActionType;
 import sample.model.Move;
+import sample.model.MoveController;
+import sample.model.messages.JSONCodecManager;
+import sample.model.messages.Message;
+import sample.model.messages.MessageMove;
+import sample.model.messages.NewGameMessage;
+import sample.model.pieces.PieceColor;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.io.PrintWriter;
 
-/**
+
+/** Class to represent a game instance into the server
  * Created by Pietro on 03/12/2016.
  */
-public class GameServer extends Thread {
+public class GameServer {
 
-	Socket socketclient;
-	Chessboard chessboard;
+	ServerPlayer white;
+	ServerPlayer black;
+	MoveController controller;
+	Gson gson;
 
-	public GameServer (Socket client){
-		this.socketclient = client;
-		chessboard = new Chessboard();
-		System.out.println("game server created");
-		this.start();
-
+	GameServer(ServerPlayer playerWhite , ServerPlayer playerBlack){
+		white = playerWhite;
+		white.setGame(this);
+		black = playerBlack;
+		black.setGame(this);
+		gson = new GsonBuilder().registerTypeAdapter(Message.class, new JSONCodecManager<Message>()).create();
+		controller = new MoveController();
+		toAll(new NewGameMessage(white.getPlayerInfo(), black.getPlayerInfo()));
 	}
 
-	@Override
-	public void run() {
+	void action(ServerPlayer player, String message){
 
-		ObjectInputStream in = null;
-		ObjectOutputStream out = null;
+		if ((controller.getTurn() == PieceColor.WHITE && player == white) ||
+				(controller.getTurn() == PieceColor.BLACK && player == black)	){
 
-		try {
-			out = new ObjectOutputStream(socketclient.getOutputStream());
-			System.out.println("Created outputStream");
-			in = new ObjectInputStream(socketclient.getInputStream());
-			System.out.println("Created inputStream");
+			gson.fromJson(message, Message.class).serverAction(this, player);
 
-		} catch (IOException e) {
-			System.err.println("Error during the creation of in/out stream towards the client");
-			this.interrupt();
-			e.printStackTrace();
+			//poi rispondi
+		}else{
+			//todo: fix this
+			player.send("Non è il tuo turno!");
 		}
+	}
+	public void move(Move move, ServerPlayer player){
+		Message msg = controller.move(move);
 
-		while(true){
+		if (msg.getType() == ActionType.VALID) {
+			System.out.println("Mossa valida");
+			try	{
+				toAll(msg);
+			}catch (Exception e){
+				System.err.println("Errore è qui");
+			}
+		}else {
 
-			try {
-				System.out.println("Writing the chessboard");
-				chessboard.printChessboard();
-				out.reset();
-				out.writeObject(chessboard);
-				out.flush();
-			} catch (IOException e) {
-				System.err.println("error writing onto the socket");
-				Thread.currentThread().stop();
-				e.printStackTrace();
+			try	{
+				player.send(gson.toJson(msg, Message.class));
+			}catch (Exception e){
+				System.err.println("Altro errore");
 			}
 
-
-			try {
-				Move m = (Move) in.readObject();
-				//chessboard.move(m);
-				System.out.println("recived move : " + m);
-			} catch (IOException e) {
-				System.err.println("error reading into the socket");
-				this.interrupt();
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				System.err.println("error in casting the object recived, class not found");
-				e.printStackTrace();
-			}
-
-
 		}
+	}
+
+	private void toAll(Message msg){
+		white.send(gson.toJson(msg, Message.class));
+		black.send(gson.toJson(msg, Message.class));
 	}
 }

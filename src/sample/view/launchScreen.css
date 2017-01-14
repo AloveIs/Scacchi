@@ -29,3 +29,38 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
 }
+
+.popupButton{
+    /*-fx-background-color: #262626;*/
+    -fx-background-color: #0d9fff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+
+/*TODO: questa class non la uso, vedere cpsa farci @LoginPopup*/
+.missingName {
+    -fx-background-color: rgb(166, 61, 40);
+}
+
+/*Styles for the button that selects the color of the player */
+.selectWhiteButton{
+    /*-fx-background-color: #ff6d0d;
+    -fx-text-fill: #ffffff;*/
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #262626;
+    -fx-font-weight: bold;
+}
+.selectBlackButton{
+    /*-fx-background-color: #0d9fff;
+    -fx-text-fill: #262626;*/
+
+    -fx-background-color: #262626;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.bigButton{
+    -fx-pref-width: 300px;
+    -fx-font-size: 30px;
+}

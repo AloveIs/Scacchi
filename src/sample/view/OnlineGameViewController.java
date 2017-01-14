@@ -1,6 +1,13 @@
 package sample.view;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXSnackbar;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,14 +19,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
-import javafx.beans.binding.Bindings;
+import jdk.management.resource.internal.inst.NetRMHooks;
+import sample.client.NetworkManager;
 import sample.client.SessionManager;
-import sample.model.ActionType;
-import sample.model.Chessboard;
-import sample.model.Coordinate;
-import sample.model.MoveController;
+import sample.model.*;
 import sample.model.messages.Message;
+import sample.model.messages.MessageMove;
 import sample.model.pieces.Piece;
 import sample.model.pieces.PieceColor;
 
@@ -28,7 +33,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class GameViewController implements Initializable {
+public class OnlineGameViewController implements Initializable {
 
 	@FXML
 	SplitPane root;
@@ -66,11 +71,8 @@ public class GameViewController implements Initializable {
 	@FXML
 	JFXButton tieGame;
 
-	@FXML
-	JFXButton resetGame;
-
 	private Scene scene;
-
+	private PieceColor side;
 
 	private	ArrayList<Coordinate> highlighted = new ArrayList<>();
 
@@ -82,8 +84,7 @@ public class GameViewController implements Initializable {
 
 	/**List of all the ImageView into the game board, ordered by index */
 	private ArrayList<ImageView> imageViewSquares = new ArrayList<>();
-	private Chessboard chessboard = SessionManager.getInstance().getChessboard();
-	private PieceColor turn;
+	private Chessboard chessboard = NetworkManager.getInstance().getChessboard();
 	private MoveController moveController = SessionManager.getInstance().getMoveController();
 
 	public void setScene(Scene scene){
@@ -105,12 +106,29 @@ public class GameViewController implements Initializable {
 		board.setPrefWidth(600);
 		board.setPrefHeight(600);
 
+		NetworkManager.getInstance().turnProperty().addListener((observable, oldValue, newValue) -> {
+			moveController.setTurn(newValue);
+			Platform.runLater(()->{
+				updateTurn(newValue);
+			});
+		});
+
 		setupSquares();
 		setupChessboard(chessboard);
-		updateTurn();
 
 		// tell the snackbar where to appear
 		notifyer.registerSnackbarContainer(paneContainer);
+	}
+
+	public void setPlayers(){
+		Player p = NetworkManager.getInstance().getPlayer();
+		if (p.getSide() == PieceColor.WHITE){
+			whiteUsername.setText(p.getName());
+			blackUsername.setText(NetworkManager.getInstance().getOpponent().getName());
+		}else{
+			blackUsername.setText(p.getName());
+			whiteUsername.setText(NetworkManager.getInstance().getOpponent().getName());
+		}
 	}
 
 
@@ -120,9 +138,8 @@ public class GameViewController implements Initializable {
 		p = chessboard.getPiece(index);
 
 		if (highlighted.isEmpty()){
-			if (p == null || p.getSide() != turn){
+			if (p == null || p.getSide() != side)
 				return;
-			}
 
 			highlighted.add(0,p.getPosition());
 			highlighted.addAll(p.accessiblePositions());
@@ -136,17 +153,21 @@ public class GameViewController implements Initializable {
 
 			Coordinate pointed = new Coordinate(index);
 
+			System.out.println("il turno è : " + NetworkManager.getInstance().getTurn());
+			System.out.println("My side è : " + side);
+
 			if (pointed.equals(highlighted.get(0))){
-			}else{
-				Message msg;
-				System.out.println("Muovi " + chessboard.getPiece(highlighted.get(0)) + "in" + pointed);
-				msg = moveController.move(highlighted.get(0), pointed);
-				updateTurn();
-				updateChessboardView();
-				if (msg.getType() == ActionType.SPECIAL){
-					endMatch();
+			}else if (NetworkManager.getInstance().getTurn() == side){
+				Message msg = null;
+				//todo: send message whit the move
+				try {
+					NetworkManager.getInstance().send(new MessageMove(new Move(highlighted.get(0), pointed)));
+					System.out.println("invio mossa");
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				msg.triggerNote(notifyer);
+			}else {
+				snackbarTurnMessage();
 			}
 			removeHighlight();
 		}else{
@@ -158,9 +179,10 @@ public class GameViewController implements Initializable {
 	private void endMatch() {
 		final JFXDialog jfxDialog;
 		JFXDialogLayout layout = new JFXDialogLayout();
-		layout.setHeading(new Label("Ha vinto " + turn.toString() + "!"));
-		layout.setBody(new Label("Cosa vui fare adesso?"));
+		//TODO: inserire qui il nome del vincitore
+		layout.setHeading(new Label("Ha vinto " + "STRING TO INSERT" + "!"));
 		JFXButton goBackHome = new JFXButton("Menù");
+		layout.setBody(new Label("Cosa vui fare adesso?"));
 		goBackHome.getStyleClass().add("popupButton");
 		JFXButton restart = new JFXButton("Nuova partita");
 		restart.getStyleClass().add("popupButton");
@@ -191,8 +213,8 @@ public class GameViewController implements Initializable {
 		final JFXDialog jfxDialog;
 		JFXDialogLayout layout = new JFXDialogLayout();
 		layout.setHeading(new Label("Pareggio!"));
-		layout.setBody(new Label("Cosa vui fare adesso?"));
 		JFXButton goBackHome = new JFXButton("Menù");
+		layout.setBody(new Label("Cosa vui fare adesso?"));
 		goBackHome.getStyleClass().add("popupButton");
 		JFXButton restart = new JFXButton("Nuova partita");
 		restart.getStyleClass().add("popupButton");
@@ -232,39 +254,25 @@ public class GameViewController implements Initializable {
 		moveController = new MoveController();
 		this.chessboard = moveController.getChessboard();
 		SessionManager.getInstance().setChessboard(chessboard);
-		updateTurn();
+		//updateTurn();
 		updateChessboardView();
 	}
 
-	private void updateTurn() {
-		if(turn == null){
-			turn  = moveController.getTurn();
-			if (turn == PieceColor.WHITE){
-				//whiteUsername.getStyleClass().add("onTurn");
-				gameBorderPane.getStyleClass().add("whiteTurn");
+	private void updateTurn(PieceColor turn) {
+		if (turn == PieceColor.WHITE){
+			gameBorderPane.getStyleClass().remove("blackTurn");
+			gameBorderPane.getStyleClass().add("whiteTurn");
 
-			}else{
-				//blackUsername.getStyleClass().add("onTurn");
-				gameBorderPane.getStyleClass().add("blackTurn");
-			}
-		}else if (turn == moveController.getTurn()){
-			//already up to date
-		}else{
-			if (turn == PieceColor.WHITE){
-				//whiteUsername.getStyleClass().remove("onTurn");
-				gameBorderPane.getStyleClass().remove("whiteTurn");
-			}else{
-				//blackUsername.getStyleClass().remove("onTurn");
-				gameBorderPane.getStyleClass().remove("blackTurn");
-			}
-			turn = null;
-			updateTurn();
+		}else if (turn == PieceColor.BLACK){
+			gameBorderPane.getStyleClass().remove("blackTurn");
+			gameBorderPane.getStyleClass().add("blackTurn");
+		}else {
+			//IN THIS CASE IS NULL, DUNNO WHAT TO DO
 		}
 	}
 
 	/**Update the view of the chessboard when it is changed in the model*/
-	private void updateChessboardView() {
-
+	public void updateChessboardView() {
 		Piece p;		//used this as a cursor
 
 		for (int i = 0; i < 64; i++) {
@@ -335,5 +343,19 @@ public class GameViewController implements Initializable {
 				i.setOnMouseClicked(event -> squarePressedHandler(squares.indexOf(event.getSource())));
 			}
 		}
+	}
+
+	public void snackbarMessage(String message){
+		notifyer.fireEvent(new JFXSnackbar.SnackbarEvent(message));
+	}
+
+
+	public void snackbarTurnMessage(){
+		//todo: do it better and complete it
+		notifyer.fireEvent(new JFXSnackbar.SnackbarEvent("Non è il tuo turno"));
+	}
+
+	public void setSide(PieceColor side) {
+		this.side = side;
 	}
 }

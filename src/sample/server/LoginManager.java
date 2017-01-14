@@ -12,12 +12,8 @@ import java.util.Scanner;
 import static sample.server.ServerMain.errLog;
 import static sample.server.ServerMain.sucLog;
 
-/**
- * Created by Pietro on 07/12/2016.
- */
+
 public class LoginManager extends Thread{
-
-
 
 	private Socket clientSocket;
 	private static PlayerPool pPool = null;
@@ -34,7 +30,6 @@ public class LoginManager extends Thread{
 		}
 		this.setDaemon(true);
 		this.start();
-
 	}
 
 	@Override
@@ -43,43 +38,34 @@ public class LoginManager extends Thread{
 		BufferedInputStream in;
 		BufferedOutputStream out;
 		String read;
-		ServerPlayer p = null;
 
 		try {
 			out = new BufferedOutputStream(clientSocket.getOutputStream());
 			in = new BufferedInputStream(clientSocket.getInputStream());
-			Scanner inputReader = new Scanner(in);
-			//todo: qui lo stronzo mi lancia un'eccezzione se il client si disconnette
-			PrintWriter outputWriter = new PrintWriter(out);
-			read = inputReader.nextLine();
 
+
+			PrintWriter outputWriter = new PrintWriter(out);
+			Scanner inputReader = new Scanner(in);
+			sucLog("Creo gli stream");
+			//todo: qui lo stronzo mi lancia un'eccezzione se il client si disconnette
+			read = inputReader.nextLine();
+			sucLog("Recived :" + read);
 			while(true) {
 				Message msg = (Message) messageHandler.fromJson(read, Message.class);
-
 				if (msg instanceof LoginMessage) {
 					LoginMessage loginMsg = (LoginMessage) msg;
-					p = new ServerPlayer(loginMsg.getPlayer(), clientSocket, inputReader , outputWriter);
-					pPool.add(p);
-					outputWriter.println(messageHandler.toJson(new ValidLoginMessage(pPool.toString()), Message.class));
-					sucLog("Send : " + messageHandler.toJson(new ValidLoginMessage(pPool.toString()), Message.class));
-					outputWriter.flush();
-
+					PlayerPool.getInstance().add(new ServerPlayer(loginMsg.getPlayer(), clientSocket, inputReader , outputWriter));
+//					sucLog("Send : " + messageHandler.toJson(new ValidLoginMessage(pPool.toString()), Message.class));
 					break;
 				} else {
-					outputWriter.print(messageHandler.toJson(new InvalidLoginMessage("Some parameters are wrong!"), Message.class));
-					out.flush();
+/*					outputWriter.print(messageHandler.toJson(new InvalidLoginMessage("Some parameters are wrong!"), Message.class));
+					outputWriter.flush();
+*/
 				}
 			}
-
-		} catch (IOException e) {
-			errLog("Error during the login handshake terminating : " + clientSocket);
-			e.printStackTrace();
-			return;
 		} catch (Exception e){
 			errLog("Error during the login handshake terminating : " + clientSocket);
-			System.err.println(e.getMessage());
 			e.printStackTrace();
-			return;
 		}
 	}
 }

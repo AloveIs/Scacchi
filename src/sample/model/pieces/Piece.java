@@ -30,7 +30,7 @@ public abstract class Piece implements Serializable{
 	protected Chessboard chessboard;
 	protected boolean yetMoved;
 
-		/*TODO: come impedire a un giocatore di fare mosse che comportano scacco? prima io farei
+	/*TODO: come impedire a un giocatore di fare mosse che comportano scacco? prima io farei
 	 la mossa e poi verificherei sulla scacchiera se è scacco, in modo da poi fare
 	 un UNDO mandando un messaggio di ILLEGALMOVE al giocatore*/
 

@@ -7,7 +7,7 @@ import java.util.Scanner;
 import static sample.ANSIColorCodes.*;
 
 /** Main class for the server
- *  This class is responsable for the initalization of the server and the creation of
+ *  This class is responsable for the initialization of the server and the creation of
  *  its component. Also from this class is possible to monitor
  * Created by Pietro on 03/12/2016.
  */
@@ -74,9 +74,6 @@ public class ServerMain {
 
 			System.out.println(VERBOSE_SERVER_LISTENER +") " + (ServerListener.verbose ? "Turn off" : "") + "Verbose Server Listner [now " + (ServerListener.verbose ? ANSI_YELLOW : ANSI_RED) + ServerListener.verbose + ANSI_RESET + "]");
 			System.out.println(SHOW_GAME_LIST + ") Show list of active games, and chose one");
-			/*System.out.println(")");
-			System.out.println(")");
-			*/
 			System.out.print("\n\t> Type 'q' to quit\n\n\t>");
 
 			answ = keyboard.next().charAt(0);

@@ -17,14 +17,14 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane fx:id="root" dividerPositions="0.8" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="732.0" prefWidth="1072.0" stylesheets="@gameView.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.GameViewController">
+<SplitPane fx:id="root" dividerPositions="0.8" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="732.0" prefWidth="1072.0" stylesheets="@gameView.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.OnlineGameViewController">
 
 
-        <items>
-      <AnchorPane fx:id="paneContainer" prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
+    <items>
+        <AnchorPane fx:id="paneContainer" prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
                         <BorderPane fx:id="gameBorderPane" prefHeight="600.0" prefWidth="600.0">
                             <center>
                                 <Group id="groupBoard" fx:id="groupBoard" BorderPane.alignment="CENTER">
@@ -56,385 +56,385 @@
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="oddSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
                                                     <styleClass>
                                                         <String fx:value="square" />
                                                         <String fx:value="evenSquares" />
                                                     </styleClass>
-                                    </Pane>
+                                                </Pane>
                                             </children>
                                         </GridPane>
                                     </children>
@@ -459,41 +459,41 @@
                             </right>
                             <bottom>
                                 <HBox alignment="CENTER" prefHeight="55.0" prefWidth="823.0" BorderPane.alignment="CENTER">
-                           <children>
+                                    <children>
                                         <Label fx:id="blackUsername" style="-fx-background-radius: 0px;" styleClass="userNameLabel" text="Player2" textFill="#262626">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                                 <padding>
-                                    <Insets left="40.0" right="40.0" />
-                                 </padding></Label>
-                           </children>
+                                            <HBox.margin>
+                                                <Insets />
+                                            </HBox.margin>
+                                            <padding>
+                                                <Insets left="40.0" right="40.0" />
+                                            </padding></Label>
+                                    </children>
                                 </HBox>
                             </bottom>
                             <top>
                                 <HBox alignment="CENTER" prefHeight="62.0" prefWidth="823.0" BorderPane.alignment="CENTER">
                                     <children>
                                         <Label fx:id="whiteUsername" style="-fx-background-radius: 0px;" styleClass="userNameLabel" text="Player1" textFill="WHITE">
-                                 <padding>
-                                    <Insets left="40.0" right="40.0" />
-                                 </padding></Label>
+                                            <padding>
+                                                <Insets left="40.0" right="40.0" />
+                                            </padding></Label>
                                     </children>
                                 </HBox>
                             </top>
                         </BorderPane>
-               </children>
-            </StackPane>
-                    <JFXSnackbar fx:id="notifyer" prefWidth="500.0" styleClass="badEvent" AnchorPane.bottomAnchor="0.0" />
-         </children>
-      </AnchorPane>
-            <VBox alignment="TOP_CENTER" prefHeight="730.0" prefWidth="220.0" style="-fx-background-color: #8dce67; -fx-spacing: 20px; -fx-padding: 20px 3px 20px 3px;">
-                <children>
-                    <!--<ColorPicker />
-                    <JFXColorPicker prefHeight="31.0" prefWidth="146.0" />-->
-                    <JFXButton fx:id="tieGame" onAction="#tie"  prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Pareggia" />
-                    <JFXButton fx:id="resetGame" onAction="#reset" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Rifai" />
-                    <JFXButton fx:id="abortGame" onAction="#exit" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Esci" />
-                </children>
-            </VBox>
-        </items>
-    </SplitPane>
+                    </children>
+                </StackPane>
+                <JFXSnackbar fx:id="notifyer" prefWidth="500.0" styleClass="badEvent" AnchorPane.bottomAnchor="0.0" />
+            </children>
+        </AnchorPane>
+        <VBox alignment="TOP_CENTER" prefHeight="730.0" prefWidth="220.0" style="-fx-background-color: #8dce67; -fx-spacing: 20px; -fx-padding: 20px 3px 20px 3px;">
+            <children>
+                <!--<ColorPicker />
+                <JFXColorPicker prefHeight="31.0" prefWidth="146.0" />-->
+                <JFXButton fx:id="tieGame" onAction="#tie"  prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Pareggia" />
+                <JFXButton fx:id="resetGame" onAction="#reset" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Rifai" />
+                <JFXButton fx:id="abortGame" onAction="#exit" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Esci" />
+            </children>
+        </VBox>
+    </items>
+</SplitPane>

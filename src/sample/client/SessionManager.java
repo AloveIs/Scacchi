@@ -1,5 +1,7 @@
 package sample.client;
 
+import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.model.Chessboard;
 import sample.model.MoveController;
@@ -9,7 +11,9 @@ public class SessionManager{
 	private static SessionManager ourInstance = new SessionManager();
 	private MoveController moveController;
 	private Chessboard chessboard;
+	private Scene startScreen;
 	private Stage stage;
+
 
 	public static SessionManager getInstance() {
 		return ourInstance;
@@ -19,6 +23,8 @@ public class SessionManager{
 		this.chessboard = new Chessboard();
 		this.moveController = new MoveController(chessboard);
 		this.stage = null;
+
+
 	}
 
 	public Chessboard getChessboard() {
@@ -37,7 +43,23 @@ public class SessionManager{
 		this.stage = stage;
 	}
 
+	public void setScene(Scene scene){
+		Platform.runLater(() -> stage.setScene(scene));
+	}
+
+	public void setStartScreen(Scene scene){
+		this.startScreen = scene;
+	}
+
 	public MoveController getMoveController() {
 		return moveController;
+	}
+
+
+
+	/**  Load the start screen
+	 */
+	public void loadStartScreen() {
+		setScene(startScreen);
 	}
 }
