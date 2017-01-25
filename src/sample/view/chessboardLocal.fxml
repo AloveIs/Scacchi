@@ -21,7 +21,7 @@
 
 
         <items>
-      <AnchorPane fx:id="paneContainer" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="paneContainer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2a334f;">
          <children>
             <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -460,7 +460,7 @@
                             <bottom>
                                 <HBox alignment="CENTER" prefHeight="55.0" prefWidth="823.0" BorderPane.alignment="CENTER">
                            <children>
-                                        <Label fx:id="blackUsername" style="-fx-background-radius: 0px;" styleClass="userNameLabel" text="Player2" textFill="#262626">
+                                        <Label fx:id="blackUsername" style="-fx-background-radius: 0px;" styleClass="userNameLabel" text="Nero" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -473,7 +473,7 @@
                             <top>
                                 <HBox alignment="CENTER" prefHeight="62.0" prefWidth="823.0" BorderPane.alignment="CENTER">
                                     <children>
-                                        <Label fx:id="whiteUsername" style="-fx-background-radius: 0px;" styleClass="userNameLabel" text="Player1" textFill="WHITE">
+                                        <Label fx:id="whiteUsername" style="-fx-background-radius: 0px;" styleClass="userNameLabel" text="Bianco" textFill="WHITE">
                                  <padding>
                                     <Insets left="40.0" right="40.0" />
                                  </padding></Label>
@@ -486,11 +486,11 @@
                     <JFXSnackbar fx:id="notifyer" prefWidth="500.0" styleClass="badEvent" AnchorPane.bottomAnchor="0.0" />
          </children>
       </AnchorPane>
-            <VBox alignment="TOP_CENTER" prefHeight="730.0" prefWidth="220.0" style="-fx-background-color: #8dce67; -fx-spacing: 20px; -fx-padding: 20px 3px 20px 3px;">
+            <VBox alignment="TOP_CENTER" prefHeight="730.0" prefWidth="220.0" style="-fx-background-color: #ac8f57; -fx-spacing: 20px; -fx-padding: 20px 3px 20px 3px;">
                 <children>
                     <!--<ColorPicker />
                     <JFXColorPicker prefHeight="31.0" prefWidth="146.0" />-->
-                    <JFXButton fx:id="tieGame" onAction="#tie"  prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Pareggia" />
+                    <JFXButton fx:id="tieGame" onAction="#tie" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Pareggia" />
                     <JFXButton fx:id="resetGame" onAction="#reset" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Rifai" />
                     <JFXButton fx:id="abortGame" onAction="#exit" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Esci" />
                 </children>

@@ -2,10 +2,12 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXSnackbar?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -486,14 +488,25 @@
                 <JFXSnackbar fx:id="notifyer" prefWidth="500.0" styleClass="badEvent" AnchorPane.bottomAnchor="0.0" />
             </children>
         </AnchorPane>
-        <VBox alignment="TOP_CENTER" prefHeight="730.0" prefWidth="220.0" style="-fx-background-color: #8dce67; -fx-spacing: 20px; -fx-padding: 20px 3px 20px 3px;">
-            <children>
-                <!--<ColorPicker />
-                <JFXColorPicker prefHeight="31.0" prefWidth="146.0" />-->
-                <JFXButton fx:id="tieGame" onAction="#tie"  prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Pareggia" />
-                <JFXButton fx:id="resetGame" onAction="#reset" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Rifai" />
-                <JFXButton fx:id="abortGame" onAction="#exit" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Esci" />
-            </children>
-        </VBox>
+        <AnchorPane>
+
+            <VBox alignment="TOP_CENTER" prefHeight="730.0" prefWidth="220.0" style="-fx-background-color: #ac8f57; -fx-spacing: 20px; -fx-padding: 20px 3px 20px 3px;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <children>
+                    <!--
+                    <ColorPicker />
+                    <JFXColorPicker prefHeight="31.0" prefWidth="146.0" />
+                    <JFXButton fx:id="abortGame" onAction="#exit" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Esci" />
+                    -->
+                    <JFXButton fx:id="tieGame" onAction="#tie" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Pareggia" />
+                    <JFXButton fx:id="resetGame" onAction="#giveUp" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Arrenditi" />
+                </children>
+            </VBox>
+            <VBox AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <ScrollPane fx:id="chatContainer" prefHeight="239.0" prefWidth="220.0" />
+                <JFXTextField fx:id="submitMessageForm" focusColor="#7c7c7c" style="-fx-background-color: white;">
+
+                </JFXTextField>
+            </VBox>
+        </AnchorPane>
     </items>
 </SplitPane>

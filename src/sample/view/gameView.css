@@ -37,7 +37,8 @@
     /*-fx-background-color: rgba(168, 78, 16, 0.99);*/
     /*-fx-background-color: rgb(135, 129, 120);   /*########GRIGINO*/
     /*-fx-background-color: #F5F5DC;    ####2*/
-    -fx-background-color: #fafafa;
+    /*-fx-background-color: #fafafa; */
+    -fx-background-color: #e0cda7;
 }
 
 .oddSquares{
@@ -45,7 +46,8 @@
     /*-fx-background-color: rgba(255, 231, 152, 0.99);*/
     /*-fx-background-color: rgb(82, 78, 67);  /*########GRIGIONE*/
     /*-fx-background-color: 	#a5682a;     ####2*/
-    -fx-background-color: #926a47;
+    /*-fx-background-color: #926a47; */
+    -fx-background-color: 	 #6b4423;
 }
 
 
@@ -62,7 +64,8 @@
 /* Style of the highlighted cells
 */
 .highlighted{
-    -fx-background-color: rgb(57, 139, 121);
+    /*-fx-background-color: rgb(57, 139, 121);*/
+    -fx-background-color: rgb(86, 86, 86);
 }
 
 
@@ -76,7 +79,8 @@
 /* Style of the notification bar popping from the bottom of the screen*/
 .jfx-snackbar-content {
     /*-fx-background-color: rgb(36, 36, 36);*/
-    -fx-background-color: #0d9fff;
+    -fx-background-color: #262626;
+    /*-fx-background-color: #0d9fff;*/
 }
 
 /* Style of the notification bar popping from the bottom of the screen
@@ -91,7 +95,8 @@
   current player has
 */
 .onTurn{
-    -fx-background-color: rgb(199, 127, 83);
+    -fx-text-fill: #dde071;
+    /*-fx-background-color: rgb(199, 127, 83);*/
 }
 
 /*Buttons on the left of the screen*/
@@ -112,8 +117,64 @@
 /*
 */
 .whiteTurn{
-    -fx-background-color: #262626;
+    /*-fx-background-color: #262626;*/
+    -fx-background-color: #2a334f;
 }
 .blackTurn{
-    -fx-background-color: white;
+    /*-fx-background-color: white;*/
+    -fx-background-color: #2a334f;
+}
+
+.acceptButton{
+    -fx-background-color: #1a6d1d;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.declineButton{
+    -fx-background-color: #8e3a38;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+
+.popupButton{
+    /*-fx-background-color: #262626;*/
+    -fx-background-color: #0d9fff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+
+/*TODO: questa class non la uso, vedere cpsa farci @LoginPopup*/
+.missingName {
+    -fx-background-color: rgb(166, 61, 40);
+}
+
+/*Styles for the button that selects the color of the player */
+.selectWhiteButton{
+    /*-fx-background-color: #ff6d0d;
+    -fx-text-fill: #ffffff;*/
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #262626;
+    -fx-font-weight: bold;
+}
+.selectBlackButton{
+    /*-fx-background-color: #0d9fff;
+    -fx-text-fill: #262626;*/
+
+    -fx-background-color: #262626;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.bigButton{
+    -fx-pref-width: 300px;
+    -fx-font-size: 30px;
+}
+
+.tieProposed{
+    -fx-background-color: lightslategray;
 }

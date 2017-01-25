@@ -14,7 +14,8 @@
     -fx-font-family: "Gill Sans MT";
     -fx-text-fill: "white";
     -fx-font-weight: bold;
-    -fx-background-color: #fc002b;
+   /* -fx-background-color: #fc002b;*/
+    -fx-background-color: #bb1515;
 }
 
 .button{
@@ -25,7 +26,7 @@
 #vboxStartScreen{
     -fx-spacing: 30px;
     -fx-alignment: center;
-    -fx-background-image: url("sfondo2.jpg");
+    -fx-background-image: url("images/sfondo2.jpg");
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
 }

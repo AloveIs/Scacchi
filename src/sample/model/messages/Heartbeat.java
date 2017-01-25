@@ -1,7 +1,5 @@
 package sample.model.messages;
 
-import sample.model.ActionType;
-
 /**
  * Created by Pietro on 10/01/2017.
  */

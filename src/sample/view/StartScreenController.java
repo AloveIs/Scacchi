@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import sample.client.NetworkManager;
 import sample.client.SessionManager;
+import sample.view.popups.LoginPopup;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +35,7 @@ public class StartScreenController implements Initializable {
 
 	private Scene localGameScene;
 	private GameViewController localGameController;
+	private OnlineGameViewController onlineGameController;
 
 
 	@Override
@@ -49,7 +51,6 @@ public class StartScreenController implements Initializable {
 	}
 
 	private void playOnline() {
-
 		Platform.runLater(new Runnable(){
 			@Override
 			public void run() {
@@ -60,13 +61,13 @@ public class StartScreenController implements Initializable {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				localGameController = (GameViewController) loader.getController();
+				onlineGameController = (OnlineGameViewController) loader.getController();
 			}
 		});
 	}
 
 	private void playLocally(){
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/view/chessboard1.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/view/chessboardLocal.fxml"));
 		Parent root = null;
 		try {
 			root = loader.load();
@@ -89,7 +90,7 @@ public class StartScreenController implements Initializable {
 		SessionManager.getInstance().setScene(localGameScene);*/
 
 /*
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/view/chessboard1.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/view/chessboardLocal.fxml"));
 		try {
 			Parent root = loader.load();
 			localGameController = (GameViewController) loader.getController();

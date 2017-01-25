@@ -2,7 +2,6 @@ package sample.model.messages;
 
 import javafx.application.Platform;
 import sample.client.NetworkManager;
-import sample.model.ActionType;
 import sample.model.Move;
 import sample.model.pieces.PieceColor;
 import sample.server.GameServer;
@@ -53,7 +52,11 @@ public class MessageMove extends Message {
 		NetworkManager.getInstance().turnProperty().set(newTurn);
 		Platform.runLater(()->{
 			NetworkManager.getInstance().getController().updateChessboardView();
-			Platform.runLater(()->NetworkManager.getInstance().getController().snackbarMessage("Tocca al " + newTurn.toString()));
+			if (message == null)
+				NetworkManager.getInstance().getController().snackbarMessage("Tocca al " + newTurn.toString());
+			else
+				NetworkManager.getInstance().getController().snackbarMessage(message + "Tocca al " + newTurn.toString());
+
 		});
 	}
 

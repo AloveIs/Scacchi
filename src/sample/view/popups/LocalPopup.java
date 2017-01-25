@@ -1,4 +1,4 @@
-package sample.view;
+package sample.view.popups;
 
 import com.jfoenix.controls.*;
 import javafx.scene.control.Label;
@@ -29,7 +29,7 @@ public class LocalPopup {
 		layout.setHeading(new Label("Inserisci i nomi dei giocatori :"));
 		layout.setBody();
 		layout.setActions(new JFXButton(("Cose")));
-		jfxDialog = new JFXDialog(stackPane,layout, JFXDialog.DialogTransition.CENTER);
+		jfxDialog = new JFXDialog(stackPane,layout, JFXDialog.DialogTransition.CENTER, false);
 		jfxDialog.show();
 	}
 

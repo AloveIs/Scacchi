@@ -55,11 +55,18 @@ public class SessionManager{
 		return moveController;
 	}
 
-
+	public void resetChessboard(){
+		chessboard = new Chessboard();
+		moveController = new MoveController(chessboard);
+	}
 
 	/**  Load the start screen
 	 */
 	public void loadStartScreen() {
 		setScene(startScreen);
+	}
+
+	public void setMoveController(MoveController moveController) {
+		this.moveController = moveController;
 	}
 }

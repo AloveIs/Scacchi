@@ -355,6 +355,7 @@ public class Chessboard implements Serializable{
 	}
 
 	public void rootMove(Move m){
+		getPiece(m.getOrigin()).setYetMoved();
 		placePiece(m.getDestination(), getPiece(m.getOrigin()));
 		placePiece(m.getOrigin(), null);
 	}

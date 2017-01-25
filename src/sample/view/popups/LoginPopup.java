@@ -1,4 +1,4 @@
-package sample.view;
+package sample.view.popups;
 
 import com.jfoenix.controls.*;
 import javafx.application.Platform;

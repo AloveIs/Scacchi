@@ -1,19 +1,16 @@
 package sample.model;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-import sample.model.exception.CoordinateExceededException;
+import sample.model.messages.CheckMateMessage;
 import sample.model.messages.Message;
 import sample.model.messages.MessageMove;
 import sample.model.messages.NonValidMoveMessage;
 import sample.model.pieces.Piece;
 import sample.model.pieces.PieceColor;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import static sample.model.ActionType.*;
-import static sample.model.ActionType.NONVALID;
+import static sample.model.messages.ActionType.*;
+import static sample.model.messages.ActionType.NONVALID;
 
 /**Class managing the moves made by a player
  * To work this class is referenced to a chessboard
@@ -134,12 +131,13 @@ public class MoveController {
 					if (chessboard.hasMadeCheckmate(originPiece.getSide())){
 						// ... it is checkmate
 						//System.err.println("Scacco matto, partita finita, ha vinto : " + turn);
-						return new Message(SPECIAL, "Scacco matto! Ha vinto " + turn.toString());
+						return new CheckMateMessage(SPECIAL,"Scacco matto! Ha vinto " + turn.toString(),move);
 						//TODO: ho vinto, devo mandare un messaggio al gioco
 					}else{
 						// ... no checkmate, it's only check
 						swapTurn();
-						return new Message(VALID, "Scacco al re " + turn.toString() + "!");
+						return new MessageMove(VALID, "Scacco al re " + turn.toString() + "!", move, turn);
+						//return new Message(VALID, "Scacco al re " + turn.toString() + "!");
 						//TODO:return the correct message, send : "ok" la mossa va bene , c'è uno scacco ma non matto
 					}
 

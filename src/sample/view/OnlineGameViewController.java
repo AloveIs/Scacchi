@@ -1,32 +1,30 @@
 package sample.view;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.*;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
-import jdk.management.resource.internal.inst.NetRMHooks;
 import sample.client.NetworkManager;
 import sample.client.SessionManager;
 import sample.model.*;
-import sample.model.messages.Message;
-import sample.model.messages.MessageMove;
+import sample.model.messages.*;
 import sample.model.pieces.Piece;
 import sample.model.pieces.PieceColor;
+import sample.view.popups.GiveUpPopup;
+import sample.view.popups.OpponentGaveUpPopup;
+import sample.view.popups.TieAcceptedPopup;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class OnlineGameViewController implements Initializable {
 	GridPane board;
 
 	@FXML
-	StackPane stackPane;
+	public StackPane stackPane;
 
 	@FXML
 	AnchorPane paneContainer;
@@ -63,16 +61,20 @@ public class OnlineGameViewController implements Initializable {
 	JFXSnackbar notifyer;
 
 	@FXML
-	Button button;
+	JFXButton abortGame;
 
 	@FXML
-	JFXButton abortGame;
+	JFXTextField submitMessageForm;
+
+	@FXML
+	ScrollPane chatContainer;
 
 	@FXML
 	JFXButton tieGame;
 
 	private Scene scene;
 	private PieceColor side;
+	private VBox messageList = new VBox();
 
 	private	ArrayList<Coordinate> highlighted = new ArrayList<>();
 
@@ -113,15 +115,32 @@ public class OnlineGameViewController implements Initializable {
 			});
 		});
 
+		chatContainer.setContent(messageList);
+		submitMessageForm.setOnKeyPressed(event -> {
+			if (event.getCode() != KeyCode.ENTER)
+				return;
+			String str = submitMessageForm.getText();
+			NetworkManager.getInstance().send(new ChatMessage(str));
+			writeChatMessage(str);
+			submitMessageForm.clear();
+		});
+
 		setupSquares();
 		setupChessboard(chessboard);
 
 		// tell the snackbar where to appear
 		notifyer.registerSnackbarContainer(paneContainer);
+		messageList.setAlignment(Pos.BOTTOM_LEFT);
+	}
+
+	private void writeChatMessage(String msg) {
+		messageList.getChildren().add(new Label(msg));
+
 	}
 
 	public void setPlayers(){
 		Player p = NetworkManager.getInstance().getPlayer();
+		System.out.println("my player is : " + p);
 		if (p.getSide() == PieceColor.WHITE){
 			whiteUsername.setText(p.getName());
 			blackUsername.setText(NetworkManager.getInstance().getOpponent().getName());
@@ -176,11 +195,12 @@ public class OnlineGameViewController implements Initializable {
 		}
 	}
 
-	private void endMatch() {
+	public void endMatch() {
 		final JFXDialog jfxDialog;
 		JFXDialogLayout layout = new JFXDialogLayout();
-		//TODO: inserire qui il nome del vincitore
-		layout.setHeading(new Label("Ha vinto " + "STRING TO INSERT" + "!"));
+		NetworkManager.getInstance().closeConnection();
+		//TODO: chiudere le socket
+		layout.setHeading(new Label("Ha vinto " + (NetworkManager.getInstance().getTurn() == PieceColor.BLACK ? blackUsername.getText() : whiteUsername.getText()) + "!"));
 		JFXButton goBackHome = new JFXButton("Menù");
 		layout.setBody(new Label("Cosa vui fare adesso?"));
 		goBackHome.getStyleClass().add("popupButton");
@@ -193,8 +213,8 @@ public class OnlineGameViewController implements Initializable {
 		jfxDialog.show();
 		restart.setOnAction(event -> {
 			// restore all the stuff to begin a new game
-			restart();
-
+			//todo: rientrare nella lobby e tutto il resto
+			System.exit(57);
 			//once everything is done close the box
 			jfxDialog.close();
 			// call garbage collector
@@ -206,36 +226,6 @@ public class OnlineGameViewController implements Initializable {
 			SessionManager.getInstance().loadStartScreen();
 		});
 
-	}
-
-	@FXML
-	void tie(ActionEvent event) {
-		final JFXDialog jfxDialog;
-		JFXDialogLayout layout = new JFXDialogLayout();
-		layout.setHeading(new Label("Pareggio!"));
-		JFXButton goBackHome = new JFXButton("Menù");
-		layout.setBody(new Label("Cosa vui fare adesso?"));
-		goBackHome.getStyleClass().add("popupButton");
-		JFXButton restart = new JFXButton("Nuova partita");
-		restart.getStyleClass().add("popupButton");
-		HBox buttonContainer = new HBox(goBackHome , restart);
-		buttonContainer.setSpacing(20);
-		layout.setActions(buttonContainer);
-		jfxDialog = new JFXDialog(stackPane,layout, JFXDialog.DialogTransition.CENTER);
-		jfxDialog.show();
-		restart.setOnAction(e -> {
-			// restore all the stuff to begin a new game
-			restart();
-			//once everything is done close the box
-			jfxDialog.close();
-			// call garbage collector
-			System.gc();
-		});
-		goBackHome.setOnAction(e ->	{
-			//todo: implement all the stuff needed to go back home
-			jfxDialog.close();
-			SessionManager.getInstance().loadStartScreen();
-		});
 	}
 
 	@FXML
@@ -253,9 +243,10 @@ public class OnlineGameViewController implements Initializable {
 		highlighted.clear();
 		moveController = new MoveController();
 		this.chessboard = moveController.getChessboard();
-		SessionManager.getInstance().setChessboard(chessboard);
-		//updateTurn();
+		NetworkManager.getInstance().setMoveController(moveController);
 		updateChessboardView();
+		messageList.getChildren().clear();
+		submitMessageForm.clear();
 	}
 
 	private void updateTurn(PieceColor turn) {
@@ -357,5 +348,44 @@ public class OnlineGameViewController implements Initializable {
 
 	public void setSide(PieceColor side) {
 		this.side = side;
+	}
+
+	@FXML
+	public void giveUp(ActionEvent actionEvent) {
+		NetworkManager.getInstance().send(new GiveUpMessage());
+		new GiveUpPopup(stackPane);
+		NetworkManager.getInstance().closeConnection();
+		restart();
+	}
+
+	@FXML
+	void tie(ActionEvent event) {
+		tieGame.getStyleClass().remove("tieProposed");
+		snackbarMessage("Hai proposto un pareggio");
+		NetworkManager.getInstance().send(new TieProposalMessage());
+	}
+
+	public void tieAccepted(){
+		new TieAcceptedPopup(stackPane);
+		snackbarMessage("Pareggio!");
+		NetworkManager.getInstance().closeConnection();
+		restart();
+		tieGame.getStyleClass().remove("tieProposed");
+	}
+
+	public void tieRefused(){
+		snackbarMessage("Il pareggio è stato rifiutato!");
+	}
+
+	public void opponentGaveUp() {
+		new OpponentGaveUpPopup(stackPane);
+		NetworkManager.getInstance().closeConnection();
+		restart();
+	}
+
+	public void chatMessage(Message msg) {
+		Label lbl = new Label(msg.getMessage());
+		lbl.setStyle("-fx-text-fill: #0d9fff");
+		messageList.getChildren().add(lbl);
 	}
 }

@@ -6,9 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import sample.view.GameViewController;
 import sample.view.ImagePicker;
-import sun.nio.ch.Net;
 
 
 /** Main class for the client application
@@ -27,13 +25,13 @@ public class Client extends Application{
 
 
 		//local game loader
-		//FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/chessboard1.fxml"));
+		//FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/chessboardLocal.fxml"));
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/view/startScreen1.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/view/startScreen.fxml"));
 
 		Parent root = loader.load();
 
-		primaryStage.getIcons().add(new Image("/sample/view/icon.png"));
+		primaryStage.getIcons().add(new Image("/sample/view/images/icon.png"));
 		primaryStage.setTitle("Scacchi");
 		//primaryStage.setFullScreen(true);
 		Scene scene = new Scene(root);

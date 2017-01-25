@@ -1,6 +1,5 @@
 package sample.model.messages;
 
-import sample.model.ActionType;
 import sample.model.Player;
 
 /**

@@ -3,7 +3,6 @@ package sample.model.messages;
 import com.jfoenix.controls.JFXSnackbar;
 import javafx.application.Platform;
 import sample.client.NetworkManager;
-import sample.model.ActionType;
 import sample.server.GameServer;
 import sample.server.ServerPlayer;
 

@@ -35,17 +35,5 @@ public class ImagePicker {
 		}else {
 			return ImagePicker.blackMap.get(piece.getType());
 		}
-		/*String colorPKG;
-
-		if (piece == null){
-			return null;
-		}
-		if (piece.getSide() == PieceColor.WHITE){
-			colorPKG = "sample/view/whites/";
-		}else {
-			colorPKG = "sample/view/blacks/";
-		}
-
-		return new Image(colorPKG + piece.getType().getImgURL());*/
 	}
 }

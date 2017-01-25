@@ -2,7 +2,6 @@ package sample.model.messages;
 
 
 import com.jfoenix.controls.JFXSnackbar;
-import sample.model.ActionType;
 import sample.server.GameServer;
 import sample.server.ServerPlayer;
 

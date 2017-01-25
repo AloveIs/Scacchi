@@ -29,7 +29,7 @@ import java.net.Socket;
 public class NetworkManager {
 
 	private static final int DEFAULT_PORT = 5757;
-	private static final String SERVER_ADD = "127.0.0.1";
+	private static final String SERVER_ADD = "192.168.137.109"/*"127.0.0.1"*/;
 
 	private static NetworkManager instance = null;
 
@@ -124,6 +124,10 @@ public class NetworkManager {
 		return controller;
 	}
 
+	private void resetChessboard(){
+		moveController = new MoveController();
+	}
+
 	public void setOpponent(Player opponent){
 		this.opponent = opponent;
 	}
@@ -162,5 +166,22 @@ public class NetworkManager {
 
 	public SimpleObjectProperty<PieceColor> turnProperty() {
 		return turn;
+	}
+
+	public void closeConnection(){
+		//todo: vedere perchè lancia questa eccezione
+		try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.hasGameProperty().set(false);
+		opponent = null;
+		resetChessboard();
+		hasGameProperty().set(false);
+	}
+
+	public void setMoveController(MoveController moveController) {
+		this.moveController = moveController;
 	}
 }

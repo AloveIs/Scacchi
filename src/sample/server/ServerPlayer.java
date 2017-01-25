@@ -1,12 +1,12 @@
 package sample.server;
 
-import com.sun.corba.se.impl.orbutil.ObjectUtility;
-import sample.model.MoveController;
 import sample.model.Player;
-import sample.model.messages.Message;
 import sample.model.pieces.PieceColor;
+
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /** Class to handle the player in the server
@@ -43,11 +43,25 @@ public class ServerPlayer extends Thread{
 			try {
 				message = input.nextLine();
 				game.action(this, message);
-			}catch (Exception e){
-				System.err.println("Errore nella lettura");
-				break;
+			}catch (IllegalStateException e){
+				System.err.println("La socket è stata chiusa");
+				if (this.isInterrupted()){
+					break;
+				}else {
+					game.giveUp(this);
+					break;
+				}
+			}catch (NoSuchElementException e1){
+				System.err.println("La socket è stata chiusa");
+				if (this.isInterrupted()){
+					break;
+				}else {
+					game.giveUp(this);
+					break;
+				}
 			}
 		}
+		System.err.println("End player : " + playerInfo);
 	}
 
 	public void send(String message){
@@ -94,5 +108,15 @@ public class ServerPlayer extends Thread{
 
 	public void setGame(GameServer game) {
 		this.game = game;
+	}
+
+	public void closePlayer(){
+		try {
+			input.close();
+			output.close();
+			playerSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

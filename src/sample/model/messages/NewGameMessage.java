@@ -3,7 +3,6 @@ package sample.model.messages;
 import javafx.application.Platform;
 import sample.client.NetworkManager;
 import sample.client.SessionManager;
-import sample.model.ActionType;
 import sample.model.Player;
 import sample.model.pieces.PieceColor;
 
@@ -38,11 +37,13 @@ public class NewGameMessage extends Message {
 
 	@Override
 	public void haveEffect(){
-		NetworkManager.getInstance().hasGameProperty().set(true);
-		SessionManager.getInstance().setScene(NetworkManager.getInstance().getScene());
-		NetworkManager.getInstance().setOpponent(NetworkManager.getInstance().getPlayer().getSide() == PieceColor.WHITE ? white : black);
-		NetworkManager.getInstance().getController().setPlayers();
-		NetworkManager.getInstance().turnProperty().set(turn);
-		Platform.runLater(() -> NetworkManager.getInstance().getController().snackbarMessage("Inizia " + turn.toString()));
+		Platform.runLater(()->{
+			NetworkManager.getInstance().hasGameProperty().set(true);
+			SessionManager.getInstance().setScene(NetworkManager.getInstance().getScene());
+			NetworkManager.getInstance().setOpponent(NetworkManager.getInstance().getPlayer().getSide() == PieceColor.WHITE ? black : white);
+			NetworkManager.getInstance().getController().setPlayers();
+			NetworkManager.getInstance().turnProperty().set(turn);
+			Platform.runLater(() -> NetworkManager.getInstance().getController().snackbarMessage("Inizia " + turn.toString()));
+		});
 	}
 }

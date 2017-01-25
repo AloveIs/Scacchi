@@ -1,4 +1,4 @@
-package sample.model;
+package sample.model.messages;
 
 /**
  * Created by Pietro on 24/12/2016.

@@ -2,16 +2,11 @@ package sample.server;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import sample.model.ActionType;
+import sample.model.messages.ActionType;
 import sample.model.Move;
 import sample.model.MoveController;
-import sample.model.messages.JSONCodecManager;
-import sample.model.messages.Message;
-import sample.model.messages.MessageMove;
-import sample.model.messages.NewGameMessage;
-import sample.model.pieces.PieceColor;
-
-import java.io.PrintWriter;
+import sample.model.messages.*;
+import sample.model.messages.GiveUpMessage;
 
 
 /** Class to represent a game instance into the server
@@ -36,40 +31,57 @@ public class GameServer {
 
 	void action(ServerPlayer player, String message){
 
+		gson.fromJson(message, Message.class).serverAction(this, player);
+		/*
 		if ((controller.getTurn() == PieceColor.WHITE && player == white) ||
 				(controller.getTurn() == PieceColor.BLACK && player == black)	){
-
-			gson.fromJson(message, Message.class).serverAction(this, player);
-
 			//poi rispondi
 		}else{
 			//todo: fix this
 			player.send("Non è il tuo turno!");
 		}
+		*/
 	}
+
 	public void move(Move move, ServerPlayer player){
 		Message msg = controller.move(move);
 
 		if (msg.getType() == ActionType.VALID) {
-			System.out.println("Mossa valida");
-			try	{
-				toAll(msg);
-			}catch (Exception e){
-				System.err.println("Errore è qui");
-			}
-		}else {
-
-			try	{
-				player.send(gson.toJson(msg, Message.class));
-			}catch (Exception e){
-				System.err.println("Altro errore");
-			}
-
+			toAll(msg);
+		}else if ((msg.getType() == ActionType.SPECIAL)) {
+			toAll(msg);
+			msg.serverAction(this,player);
+		}else{
+			player.send(gson.toJson(msg, Message.class));
 		}
 	}
 
-	private void toAll(Message msg){
+	public void toAll(Message msg){
 		white.send(gson.toJson(msg, Message.class));
 		black.send(gson.toJson(msg, Message.class));
+	}
+
+	public void toOpponent(ServerPlayer myPlayer, Message msg){
+		if (myPlayer == white){
+			black.send(gson.toJson(msg, Message.class));
+		}else{
+			white.send(gson.toJson(msg, Message.class));
+		}
+	}
+
+	public void giveUp(ServerPlayer player) {
+		ServerPlayer p = (player == white) ? black : white;
+		p.send(gson.toJson(new GiveUpMessage(), Message.class));
+		interruptAll();
+	}
+
+	public void interruptAll() {
+		white.interrupt();
+		black.interrupt();
+	}
+
+	public void closeAll() {
+		white.closePlayer();
+		black.closePlayer();
 	}
 }

@@ -15,10 +15,10 @@ import javafx.scene.layout.*;
 
 import javafx.beans.binding.Bindings;
 import sample.client.SessionManager;
-import sample.model.ActionType;
 import sample.model.Chessboard;
 import sample.model.Coordinate;
 import sample.model.MoveController;
+import sample.model.messages.CheckMateMessage;
 import sample.model.messages.Message;
 import sample.model.pieces.Piece;
 import sample.model.pieces.PieceColor;
@@ -143,10 +143,12 @@ public class GameViewController implements Initializable {
 				msg = moveController.move(highlighted.get(0), pointed);
 				updateTurn();
 				updateChessboardView();
-				if (msg.getType() == ActionType.SPECIAL){
+				if (msg instanceof CheckMateMessage){
 					endMatch();
 				}
-				msg.triggerNote(notifyer);
+				if (!msg.getMessage().equals("")){
+					msg.triggerNote(notifyer);
+				}
 			}
 			removeHighlight();
 		}else{
@@ -182,6 +184,7 @@ public class GameViewController implements Initializable {
 			//todo: implement all the stuff needed to go back home
 			jfxDialog.close();
 			SessionManager.getInstance().loadStartScreen();
+			restart();
 		});
 
 	}
@@ -213,11 +216,13 @@ public class GameViewController implements Initializable {
 			//todo: implement all the stuff needed to go back home
 			jfxDialog.close();
 			SessionManager.getInstance().loadStartScreen();
+			restart();
 		});
 	}
 
 	@FXML
 	void exit(ActionEvent event) {
+		restart();
 		SessionManager.getInstance().loadStartScreen();
 	}
 
@@ -230,6 +235,7 @@ public class GameViewController implements Initializable {
 		removeHighlight();
 		highlighted.clear();
 		moveController = new MoveController();
+		SessionManager.getInstance().setMoveController(moveController);
 		this.chessboard = moveController.getChessboard();
 		SessionManager.getInstance().setChessboard(chessboard);
 		updateTurn();
@@ -240,22 +246,22 @@ public class GameViewController implements Initializable {
 		if(turn == null){
 			turn  = moveController.getTurn();
 			if (turn == PieceColor.WHITE){
-				//whiteUsername.getStyleClass().add("onTurn");
-				gameBorderPane.getStyleClass().add("whiteTurn");
+				whiteUsername.getStyleClass().add("onTurn");
+//				gameBorderPane.getStyleClass().add("whiteTurn");
 
 			}else{
-				//blackUsername.getStyleClass().add("onTurn");
-				gameBorderPane.getStyleClass().add("blackTurn");
+				blackUsername.getStyleClass().add("onTurn");
+//				gameBorderPane.getStyleClass().add("blackTurn");
 			}
 		}else if (turn == moveController.getTurn()){
 			//already up to date
 		}else{
 			if (turn == PieceColor.WHITE){
-				//whiteUsername.getStyleClass().remove("onTurn");
-				gameBorderPane.getStyleClass().remove("whiteTurn");
+				whiteUsername.getStyleClass().remove("onTurn");
+//				gameBorderPane.getStyleClass().remove("whiteTurn");
 			}else{
-				//blackUsername.getStyleClass().remove("onTurn");
-				gameBorderPane.getStyleClass().remove("blackTurn");
+				blackUsername.getStyleClass().remove("onTurn");
+//				gameBorderPane.getStyleClass().remove("blackTurn");
 			}
 			turn = null;
 			updateTurn();
@@ -271,9 +277,7 @@ public class GameViewController implements Initializable {
 			p = chessboard.getPiece(i);
 
 			if (currentChessboard[i] == null && p == null) {
-				continue;
 			} else if (currentChessboard[i] != null && currentChessboard[i].equals(p)) {
-				continue;
 			} else {
 				imageViewSquares.get(i).setImage(ImagePicker.get(p));
 				currentChessboard[i] = p;
@@ -288,7 +292,7 @@ public class GameViewController implements Initializable {
 			squares.get(index).getStyleClass().add("highlighted");
 		}
 	}
-	/** Remove highlighting from the previous reachable cells	 */
+	/** Remove highlighting from the previous reachable cells */
 	private void removeHighlight() {
 
 		for (Coordinate c : highlighted){
