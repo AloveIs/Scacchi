@@ -10,5 +10,6 @@
     <orderEntry type="library" name="com.jfoenix:jfoenix:1.0.0" level="project" />
     <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-core:2.7.3" level="application" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.0" level="application" />
+    <orderEntry type="library" name="com.googlecode.lanterna:lanterna:3.0.0-beta3" level="project" />
   </component>
 </module>

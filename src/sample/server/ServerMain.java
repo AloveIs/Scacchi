@@ -1,6 +1,17 @@
 package sample.server;
 
+
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.TerminalScreen;
+import com.googlecode.lanterna.terminal.*;
+import com.googlecode.lanterna.gui2.*;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -34,8 +45,32 @@ public class ServerMain {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		/*
+		Terminal terminal = new DefaultTerminalFactory().createTerminal();
+		Screen screen = new TerminalScreen(terminal);
+		screen.startScreen();
 
+		// Create window to hold the panel
+		BasicWindow window = new BasicWindow();
+		window.setTitle("Scacchi Server");
+		window.setHints(Arrays.asList(Window.Hint.CENTERED));
+		// Create gui and start gui
+		Panel serverPanel = new Panel();
+		serverPanel.setLayoutManager(new LinearLayout(Direction.VERTICAL));
+		Button begin = new Button("BEGIN", ()->{
+
+		});
+		Button exit = new Button("EXIT", ()->System.exit(0));
+		serverPanel.addComponent(begin);
+		serverPanel.addComponent(exit);
+		window.setComponent(serverPanel);
+
+		MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.CYAN));
+		gui.addWindowAndWait(window);
+
+
+		*/
 		int i = 0;
 		ServerListener serverListener = null;
 		Scanner keyboard = new Scanner(System.in);
@@ -94,5 +129,4 @@ public class ServerMain {
 		} while (answ != 'q');
 
 	}
-
 }
