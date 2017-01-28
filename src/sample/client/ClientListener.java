@@ -17,7 +17,7 @@ public class ClientListener extends Thread {
 	BufferedInputStream in;
 
 	public ClientListener(BufferedInputStream in){
-		System.out.println(Thread.currentThread().toString() + "sto creando il client listner");
+		//System.out.println(Thread.currentThread().toString() + "sto creando il client listner");
 		this.in = in;
 		this.setDaemon(true);
 		this.start();
@@ -35,9 +35,6 @@ public class ClientListener extends Thread {
 				Message message = NetworkManager.getInstance().getGson().fromJson(msg, Message.class);
 				message.haveEffect();
 			}catch (Exception e){continue;}
-
-			//todo: decode message
-
 		}while (true);
 	}
 }

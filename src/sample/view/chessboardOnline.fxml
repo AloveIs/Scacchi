@@ -501,10 +501,9 @@
                     <JFXButton fx:id="resetGame" onAction="#giveUp" prefHeight="40.0" prefWidth="170.0" styleClass="actionButton" text="Arrenditi" />
                 </children>
             </VBox>
-            <VBox AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                 <ScrollPane fx:id="chatContainer" prefHeight="239.0" prefWidth="220.0" />
                 <JFXTextField fx:id="submitMessageForm" focusColor="#7c7c7c" style="-fx-background-color: white;">
-
                 </JFXTextField>
             </VBox>
         </AnchorPane>

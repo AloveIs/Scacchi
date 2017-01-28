@@ -4,6 +4,7 @@ import com.jfoenix.controls.*;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -12,7 +13,8 @@ import javafx.scene.paint.Paint;
 import sample.client.NetworkManager;
 import sample.model.pieces.PieceColor;
 
-/**
+/** Popup to make a login after a game has finished without having to go back to
+ * the main screen
  * Created by Pietro on 19/01/2017.
  */
 public class InnerLoginPopup {
@@ -125,7 +127,40 @@ public class InnerLoginPopup {
 			//on abort close the popup
 			jfxDialog.close();
 		});
+
+		nameField.setOnKeyPressed(event -> {
+			if (event.getCode() != KeyCode.ENTER)
+				return;
+			String name = nameField.getText();
+			System.out.println(name);
+			if ( name == null || name.trim().equals("") || name.trim().equals(" ")|| name.trim().equals("\n")){
+				nameField.setUnFocusColor(Paint.valueOf("#fc002b"));
+			}else{
+				PieceColor color = colorBtn.getText().equals("Bianco") ? PieceColor.WHITE : PieceColor.BLACK ;
+				NetworkManager.getInstance().setPlayer(name, color);
+
+				//place a spinner while it connects
+				layout.getActions().clear();
+				layout.getHeading().clear();
+				JFXSpinner spinner = new JFXSpinner();
+				spinner.setRadius(20);
+				layout.setBody(spinner);
+				if (NetworkManager.getInstance().connect()){
+					NetworkManager.getInstance().hasGameProperty().addListener((observable, oldValue, newValue) -> {
+						Platform.runLater(() ->{
+							System.out.println("Value changed from " + oldValue + " to " + newValue);
+							if (newValue == true)jfxDialog.close();});
+					});
+				}else{
+					Platform.runLater(() -> {
+						head.setText("Errore durante la connessione al server!");
+						layout.setHeading(head);
+						layout.setActions(cancelBtn);
+						layout.getBody().clear();
+					});
+				}
+			}
+		});
+
 	}
-
-
 }

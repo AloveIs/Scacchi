@@ -88,6 +88,8 @@ public class OnlineGameViewController implements Initializable {
 	private ArrayList<ImageView> imageViewSquares = new ArrayList<>();
 	private Chessboard chessboard = NetworkManager.getInstance().getChessboard();
 	private MoveController moveController = SessionManager.getInstance().getMoveController();
+	private boolean unreadMessage = false;
+
 
 	public void setScene(Scene scene){
 		this.scene = scene;
@@ -115,11 +117,19 @@ public class OnlineGameViewController implements Initializable {
 			});
 		});
 
+		messageList.setAlignment(Pos.TOP_LEFT);
 		chatContainer.setContent(messageList);
-		submitMessageForm.setOnKeyPressed(event -> {
+		chatContainer.vvalueProperty().addListener((observable, oldValue, newValue) -> {
+			if (unreadMessage)
+				chatContainer.setVvalue(1.0);
+			unreadMessage = false;
+		});
+				submitMessageForm.setOnKeyPressed(event -> {
 			if (event.getCode() != KeyCode.ENTER)
 				return;
 			String str = submitMessageForm.getText();
+			if (str.equals(""))
+				return;
 			NetworkManager.getInstance().send(new ChatMessage(str));
 			writeChatMessage(str);
 			submitMessageForm.clear();
@@ -134,13 +144,12 @@ public class OnlineGameViewController implements Initializable {
 	}
 
 	private void writeChatMessage(String msg) {
+		unreadMessage = true;
 		messageList.getChildren().add(new Label(msg));
-
 	}
 
 	public void setPlayers(){
 		Player p = NetworkManager.getInstance().getPlayer();
-		System.out.println("my player is : " + p);
 		if (p.getSide() == PieceColor.WHITE){
 			whiteUsername.setText(p.getName());
 			blackUsername.setText(NetworkManager.getInstance().getOpponent().getName());
@@ -384,6 +393,7 @@ public class OnlineGameViewController implements Initializable {
 	}
 
 	public void chatMessage(Message msg) {
+		unreadMessage = true;
 		Label lbl = new Label(msg.getMessage());
 		lbl.setStyle("-fx-text-fill: #0d9fff");
 		messageList.getChildren().add(lbl);
