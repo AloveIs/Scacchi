@@ -32,6 +32,8 @@ public class ServerMain {
 	private static final char SHOW_GAME_LIST = '2';
 
 	private static Date date = new Date();
+	private static PlayerPool playerPool;
+	private static ServerListener serverListener;
 
 
 	synchronized public static void log(String arg){
@@ -49,6 +51,7 @@ public class ServerMain {
 
 		Terminal terminal = new DefaultTerminalFactory().createTerminal();
 		Screen screen = new TerminalScreen(terminal);
+		Label label = new Label("Welcome to Scacchi's server, what do you want to do?");
 		screen.startScreen();
 
 		// Create window to hold the panel
@@ -57,18 +60,40 @@ public class ServerMain {
 		window.setHints(Arrays.asList(Window.Hint.CENTERED));
 		// Create gui and start gui
 		Panel serverPanel = new Panel();
+		Panel actionPanel = new Panel();
 		serverPanel.setLayoutManager(new LinearLayout(Direction.VERTICAL));
-		Button begin = new Button("BEGIN", ()->{
-
+		Button begin = new Button("START SERVICE", ()->{
+			int i = 0;
+			playerPool = PlayerPool.getInstance();
+			do {
+				try {
+					serverListener = new ServerListener();
+					break;
+				} catch (IOException e) {
+					i++;
+					errLog("Failed in creating server listener [attempt : " + i + "]" + e.getMessage());
+				}
+			} while (i < MAX_ATTEMPTS);
+			if (i == MAX_ATTEMPTS) {
+				errLog("Reached max number of attepts...");
+				errLog("Shutting down");
+				serverPanel.removeComponent(label);
+				window.close();
+				window = new BasicWindow();
+				window.setTitle("Server");
+				window.setHints(Arrays.asList(Window.Hint.FULL_SCREEN));
+				window.setComponent(actionPanel);
+			}
 		});
 		Button exit = new Button("EXIT", ()->System.exit(0));
-		serverPanel.addComponent(begin);
-		serverPanel.addComponent(exit);
+		actionPanel.addComponent(begin);
+		actionPanel.addComponent(exit);
+		serverPanel.addComponent(label);
+		serverPanel.addComponent(actionPanel);
 		window.setComponent(serverPanel);
 
 		MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.CYAN));
 		gui.addWindowAndWait(window);
-
 	
 /*
 		int i = 0;
