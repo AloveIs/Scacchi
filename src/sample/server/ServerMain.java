@@ -46,7 +46,9 @@ public class ServerMain {
 
 
 	public static void main(String[] args) throws IOException {
-		/*
+
+	/*
+
 		Terminal terminal = new DefaultTerminalFactory().createTerminal();
 		Screen screen = new TerminalScreen(terminal);
 		screen.startScreen();
@@ -69,8 +71,8 @@ public class ServerMain {
 		MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.CYAN));
 		gui.addWindowAndWait(window);
 
+	*/
 
-		*/
 		int i = 0;
 		ServerListener serverListener = null;
 		Scanner keyboard = new Scanner(System.in);
@@ -127,6 +129,5 @@ public class ServerMain {
 			}
 
 		} while (answ != 'q');
-
 	}
 }
