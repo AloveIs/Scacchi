@@ -1,7 +1,5 @@
 package sample.model;
 
-import sample.model.pieces.Piece;
-
 import java.io.Serializable;
 
 /**

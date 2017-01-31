@@ -3,7 +3,6 @@ package sample.model;
 import sample.model.exception.CoordinateExceededException;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /** Class representic the coordinate in the chessboard.

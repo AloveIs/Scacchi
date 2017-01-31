@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import sample.client.NetworkManager;
+import sample.client.SessionManager;
 import sample.model.pieces.PieceColor;
 
 /** Popup to make a login after a game has finished without having to go back to
@@ -124,8 +125,8 @@ public class InnerLoginPopup {
 		});
 
 		cancelBtn.setOnAction(event -> {
-			//on abort close the popup
 			jfxDialog.close();
+			SessionManager.getInstance().loadStartScreen();
 		});
 
 		nameField.setOnKeyPressed(event -> {

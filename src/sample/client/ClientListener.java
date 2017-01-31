@@ -1,12 +1,8 @@
 package sample.client;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import sample.model.Chessboard;
 import sample.model.messages.Message;
-import sample.model.messages.NewGameMessage;
 
-import java.io.*;
-import java.net.SocketException;
+import java.io.BufferedInputStream;
 import java.util.Scanner;
 
 /** Class used to listen to the socket

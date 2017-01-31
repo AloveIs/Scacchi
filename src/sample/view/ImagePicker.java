@@ -6,7 +6,6 @@ import sample.model.pieces.PieceColor;
 import sample.model.pieces.PieceType;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 /** Class to associate a piece with its relative image,

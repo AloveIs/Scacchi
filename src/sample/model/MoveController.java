@@ -10,7 +10,6 @@ import sample.model.pieces.PieceColor;
 import java.util.ArrayList;
 
 import static sample.model.messages.ActionType.*;
-import static sample.model.messages.ActionType.NONVALID;
 
 /**Class managing the moves made by a player
  * To work this class is referenced to a chessboard

@@ -5,9 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.channels.IllegalBlockingModeException;
 
-import static sample.server.ServerMain.errLog;
-import static sample.server.ServerMain.log;
-import static sample.server.ServerMain.sucLog;
+import static sample.server.ServerMain.*;
 
 /** Class listening for incoming connection
  *  This class is listening to a port for incoming connection. If a connection is detected
@@ -68,6 +66,7 @@ public class ServerListener extends Thread{
 				new LoginManager(received);
 
 			} catch (IOException e) {
+
 				errLog(e.getMessage() + "Error during the handling of te newly received socket.");
 				//e.printStackTrace();
 			}catch (IllegalBlockingModeException | SecurityException e){

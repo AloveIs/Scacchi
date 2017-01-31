@@ -1,6 +1,5 @@
 package sample.server;
 
-import sample.model.Chessboard;
 import sample.model.MoveController;
 
 /** //TODO: FARE LA DOCUMENTAZIONE

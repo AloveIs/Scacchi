@@ -1,17 +1,7 @@
 package sample.server;
 
 
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.*;
-import com.googlecode.lanterna.gui2.*;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -27,51 +17,47 @@ public class ServerMain {
 
 
 	private static final int MAX_ATTEMPTS = 6;
-
+	private static final int LOOP = 10;
 	private static final char VERBOSE_SERVER_LISTENER = '1';
-	private static final char SHOW_GAME_LIST = '2';
-
+	private static final char VERBOSE_GAME = '2';
+	private static final char VERBOSE_LOGIN_MANAGER = '3';
+	private static final char SHOW_PLAYER_POOL = '5';
+	private static final char VERBOSE_PLAYER_POOL = '4';
+	private static int counter = 0;
 	private static Date date = new Date();
-
 
 	synchronized public static void log(String arg){
 		System.out.println(ANSI_GREEN + "[" + date +"]\t# " + ANSI_RESET + arg );
+		counter++;
+		if (counter >= LOOP)
+			printMenu();
 	}
 	synchronized public static void sucLog(String arg){
 		System.out.println(ANSI_GREEN + "[" + date +"]\t# " + arg + ANSI_RESET );
+		counter++;
+		if (counter >= LOOP)
+			printMenu();
 	}
 	synchronized public static void errLog(String arg){
 		System.out.println(ANSI_GREEN + "[" + date +"]\t# " + ANSI_RED + arg + ANSI_RESET);
+		counter++;
+		if (counter >= LOOP)
+			printMenu();
 	}
 
+	private static void printMenu() {
+
+		counter = 0;
+		System.out.println("");
+		System.out.println(VERBOSE_SERVER_LISTENER +") " + (ServerListener.verbose ? "Turn off " : "") + "verbose Server Listner [now " + (ServerListener.verbose ? ANSI_YELLOW : ANSI_RED) + ServerListener.verbose + ANSI_RESET + "]");
+		System.out.println(VERBOSE_GAME +") " + (GameServer.verbose ? "Turn off " : "") + "verbose all games [now " + (GameServer.verbose ? ANSI_YELLOW : ANSI_RED) + GameServer.verbose + ANSI_RESET + "]");
+		System.out.println(VERBOSE_LOGIN_MANAGER + ") " + (LoginManager.verbose ? "Turn off " : "") + "verbose login manager [now " + (LoginManager.verbose ? ANSI_YELLOW : ANSI_RED) + LoginManager.verbose + ANSI_RESET + "]");
+		System.out.println(VERBOSE_PLAYER_POOL + ") " + (PlayerPool.verbose ? "Turn off " : "") + "verbose playerPool [now " + (PlayerPool.verbose ? ANSI_YELLOW : ANSI_RED) + PlayerPool.verbose + ANSI_RESET + "]");
+		System.out.println(SHOW_PLAYER_POOL + ") Show player pool status");
+		System.out.print("\n\t> Type 'q' to quit\n\n\t>");
+	}
 
 	public static void main(String[] args) throws IOException {
-
-	/*
-
-		Terminal terminal = new DefaultTerminalFactory().createTerminal();
-		Screen screen = new TerminalScreen(terminal);
-		screen.startScreen();
-
-		// Create window to hold the panel
-		BasicWindow window = new BasicWindow();
-		window.setTitle("Scacchi Server");
-		window.setHints(Arrays.asList(Window.Hint.CENTERED));
-		// Create gui and start gui
-		Panel serverPanel = new Panel();
-		serverPanel.setLayoutManager(new LinearLayout(Direction.VERTICAL));
-		Button begin = new Button("BEGIN", ()->{
-
-		});
-		Button exit = new Button("EXIT", ()->System.exit(0));
-		serverPanel.addComponent(begin);
-		serverPanel.addComponent(exit);
-		window.setComponent(serverPanel);
-
-		MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.CYAN));
-		gui.addWindowAndWait(window);
-
-	*/
 
 		int i = 0;
 		ServerListener serverListener = null;
@@ -82,7 +68,7 @@ public class ServerMain {
 		PlayerPool pPool = PlayerPool.getInstance();
 		sucLog("PlayerPool Created at : " + pPool);
 
-		log("Creating the ServerListner...");
+		log("Creating the ServerListener...");
 
 		do {
 			try {
@@ -100,32 +86,37 @@ public class ServerMain {
 			System.exit(0);
 		}
 
-		System.out.println(Thread.currentThread().toString() + "# CREATED LISTENER THREAD #");
-
+		sucLog("Successfully created the ServerListener");
+		sucLog("End initialization");
 
 		//main controller board for the server
 
 		char answ;
 
 		do {
-
-			System.out.println(VERBOSE_SERVER_LISTENER +") " + (ServerListener.verbose ? "Turn off" : "") + "Verbose Server Listner [now " + (ServerListener.verbose ? ANSI_YELLOW : ANSI_RED) + ServerListener.verbose + ANSI_RESET + "]");
-			System.out.println(SHOW_GAME_LIST + ") Show list of active games, and chose one");
-			System.out.print("\n\t> Type 'q' to quit\n\n\t>");
+			printMenu();
 
 			answ = keyboard.next().charAt(0);
 			answ = Character.toLowerCase(answ);
 
 			switch(answ){
-
 				case VERBOSE_SERVER_LISTENER :
-					ServerListener.verbose = ServerListener.verbose != true;
+					ServerListener.verbose = !ServerListener.verbose;
 					break;
-				case SHOW_GAME_LIST :
-
+				case VERBOSE_GAME :
+					GameServer.verbose = !GameServer.verbose;
+					break;
+				case VERBOSE_LOGIN_MANAGER:
+					LoginManager.verbose = !LoginManager.verbose;
+					break;
+				case SHOW_PLAYER_POOL:
+					PlayerPool.pprint();
+					break;
+				case VERBOSE_PLAYER_POOL:
+					PlayerPool.verbose = !PlayerPool.verbose;
 					break;
 				default:
-					System.out.println("Inserisci un nuovo carattere valido");
+					errLog("Inserire un carattere valido");
 			}
 
 		} while (answ != 'q');

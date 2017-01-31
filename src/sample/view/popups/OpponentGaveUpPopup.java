@@ -9,7 +9,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import sample.client.NetworkManager;
 import sample.client.SessionManager;
-import sample.view.popups.InnerLoginPopup;
 
 /**
  * Created by Pietro on 19/01/2017.

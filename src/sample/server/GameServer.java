@@ -2,11 +2,11 @@ package sample.server;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import sample.model.messages.ActionType;
 import sample.model.Move;
 import sample.model.MoveController;
 import sample.model.messages.*;
-import sample.model.messages.GiveUpMessage;
+
+import static sample.server.ServerMain.sucLog;
 
 
 /** Class to represent a game instance into the server
@@ -14,10 +14,14 @@ import sample.model.messages.GiveUpMessage;
  */
 public class GameServer {
 
-	ServerPlayer white;
-	ServerPlayer black;
-	MoveController controller;
-	Gson gson;
+	public static boolean verbose = false;
+	private volatile static int id_counter = 0;
+
+	private ServerPlayer white;
+	private ServerPlayer black;
+	private MoveController controller;
+	private Gson gson;
+	private int id;
 
 	GameServer(ServerPlayer playerWhite , ServerPlayer playerBlack){
 		white = playerWhite;
@@ -26,7 +30,11 @@ public class GameServer {
 		black.setGame(this);
 		gson = new GsonBuilder().registerTypeAdapter(Message.class, new JSONCodecManager<Message>()).create();
 		controller = new MoveController();
+		id = id_counter;
 		toAll(new NewGameMessage(white.getPlayerInfo(), black.getPlayerInfo()));
+		//output some if created
+		if (verbose)
+			sucLog("[GAME" + id + "]Created game between" + white + black);
 	}
 
 	void action(ServerPlayer player, String message){
@@ -70,6 +78,7 @@ public class GameServer {
 	}
 
 	public void giveUp(ServerPlayer player) {
+		System.out.println(player);
 		ServerPlayer p = (player == white) ? black : white;
 		p.send(gson.toJson(new GiveUpMessage(), Message.class));
 		interruptAll();
@@ -83,5 +92,8 @@ public class GameServer {
 	public void closeAll() {
 		white.closePlayer();
 		black.closePlayer();
+		if (verbose){
+			sucLog("[GAME" + id + "]Succesfully ended");
+		}
 	}
 }

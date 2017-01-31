@@ -69,6 +69,8 @@ public class NetworkManager {
 	public void setPlayer(String name, PieceColor side) {
 		player = new Player(name, side);
 		controller.setSide(side);
+		controller.updateChessboardView();
+
 		System.out.println(player);
 	}
 

@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import static sample.server.ServerMain.*;
 
 /** Class to handle the player in the server
  * Created by Pietro on 11/12/2016.
@@ -44,24 +45,42 @@ public class ServerPlayer extends Thread{
 				message = input.nextLine();
 				game.action(this, message);
 			}catch (IllegalStateException e){
-				System.err.println("La socket è stata chiusa");
+				PlayerPool.getInstance().remove(this);
+				if (game.verbose)
+					sucLog("La socket è stata chiusa");
 				if (this.isInterrupted()){
 					break;
 				}else {
-					game.giveUp(this);
+					if (game != null)
+						game.giveUp(this);
 					break;
 				}
 			}catch (NoSuchElementException e1){
-				System.err.println("La socket è stata chiusa");
+				PlayerPool.getInstance().remove(this);
+				if (game.verbose)
+					sucLog("La socket è stata chiusa");
 				if (this.isInterrupted()){
 					break;
 				}else {
-					game.giveUp(this);
+					if (game != null)
+						game.giveUp(this);
+					break;
+				}
+			}catch (NullPointerException e2){
+				PlayerPool.getInstance().remove(this);
+				if (game.verbose)
+					sucLog("La socket è stata chiusa");
+				if (this.isInterrupted()){
+					break;
+				}else {
+					if (game != null)
+						game.giveUp(this);
 					break;
 				}
 			}
 		}
-		System.err.println("End player : " + playerInfo);
+		if (game.verbose)
+			sucLog("Disconnetto il giocatore " + playerInfo);
 	}
 
 	public void send(String message){
@@ -69,7 +88,17 @@ public class ServerPlayer extends Thread{
 			output.println(message);
 			output.flush();
 		}catch (Exception e){
-			System.err.println("Errore durante il send a " + this);
+			errLog("Errore durante il send a " + this);
+		}
+	}
+
+	public boolean sendHeartbeat(){
+		try {
+			output.println("Heartbeat");
+			output.flush();
+			return true;
+		}catch (Exception e){
+			return false;
 		}
 	}
 

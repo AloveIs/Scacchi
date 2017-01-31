@@ -2,8 +2,6 @@ package sample.model.pieces;
 
 import sample.model.Chessboard;
 import sample.model.Coordinate;
-import sample.model.Move;
-import sample.model.exception.CoordinateExceededException;
 
 import java.util.ArrayList;
 

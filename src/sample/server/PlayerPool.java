@@ -1,8 +1,7 @@
 package sample.server;
 
-import sample.model.Player;
 import sample.model.pieces.PieceColor;
-
+import static sample.server.ServerMain.*;
 import java.util.ArrayList;
 
 /** Class for managing the player connected but still not playing
@@ -41,25 +40,31 @@ public class PlayerPool {
 
 		clean();
 
-		System.out.println("White: " + whites.size() + "  #  Black: " + blacks.size());
-		for (ServerPlayer q : whites){
-			System.out.println(q);
-		}
-		for (ServerPlayer q : blacks){
-			System.out.println(q);
-		}
 		if (whites.isEmpty() || blacks.isEmpty()){
-			System.out.println("Inserito il giocatore "+ p + " ma non ci sono partite disponibili");
+			if (verbose)
+				sucLog("New Player connected " + p + " but no avaliable games");
 		}else{
-			System.out.println("faccio partire la partita tra " + whites.get(0) + " e " + blacks.get(0));
+			if (verbose){
+				sucLog("New Player connected " + p);
+				log("Trying to start a game between " + whites.get(0) + " " + blacks.get(0));
+			}
 
-			//TODO: FAR PARTIRE UN  DI GIOCO
-			new GameServer(whites.get(0), blacks.get(0));
-			whites.get(0).send("ciao");
-			blacks.get(0).send("ciao");
-			whites.remove(0);
-			blacks.remove(0);
+			if (whites.get(0).sendHeartbeat() && blacks.get(0).sendHeartbeat()){
+				new GameServer(whites.get(0), blacks.get(0));
+				if (verbose)
+					sucLog("Sucessfully started a game[" +whites.get(0) + " " + blacks.get(0) + "]");
+				whites.remove(0);
+				blacks.remove(0);
+			}else{
+				if (verbose)
+					errLog("Game did not start, one of the player disconnected");
+				if (!whites.get(0).sendHeartbeat())
+					whites.remove(0);
+				if (!blacks.get(0).sendHeartbeat())
+					blacks.remove(0);
+			}
 		}
+		clean();
 	}
 
 	private void clean(){
@@ -71,5 +76,24 @@ public class PlayerPool {
 	@Override
 	synchronized public String toString() {
 		return "Whites : " + whites.size() + "Blacks : " + blacks.size();
+	}
+
+	public static void pprint() {
+		System.out.println(PlayerPool.getInstance().toString());
+		PlayerPool.getInstance().printQueue();
+	}
+
+	private void printQueue() {
+		for (ServerPlayer p : whites)
+			System.out.println("\t" + p);
+		for (ServerPlayer p : blacks)
+			System.out.println("\t" + p);
+	}
+
+	public void remove(ServerPlayer player) {
+		if (player.getSide() == PieceColor.WHITE)
+			whites.remove(player);
+		else
+			blacks.remove(player);
 	}
 }

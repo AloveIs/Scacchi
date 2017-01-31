@@ -11,7 +11,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import sample.client.NetworkManager;
-import sample.model.messages.ChatMessage;
 import sample.model.pieces.PieceColor;
 
 /** Login popup for the main screen

@@ -2,7 +2,6 @@ package sample.model.messages;
 
 import javafx.application.Platform;
 import sample.client.NetworkManager;
-import sample.model.messages.Message;
 import sample.server.GameServer;
 import sample.server.ServerPlayer;
 

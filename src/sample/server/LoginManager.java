@@ -2,26 +2,33 @@ package sample.server;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import sample.model.messages.*;
-import sample.model.Player;
+import sample.model.messages.JSONCodecManager;
+import sample.model.messages.LoginMessage;
+import sample.model.messages.Message;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
 import static sample.server.ServerMain.errLog;
+import static sample.server.ServerMain.log;
 import static sample.server.ServerMain.sucLog;
 
 
 public class LoginManager extends Thread{
 
+	public static boolean verbose;
 	private Socket clientSocket;
 	private static PlayerPool pPool = null;
 
 	Gson messageHandler;
 
 	public LoginManager (Socket clientSocket){
-		System.out.println("creating new login manager");
+		if (verbose)
+			log("creating new login manger...");
 		this.clientSocket = clientSocket;
 		messageHandler = new GsonBuilder().registerTypeAdapter(Message.class, new JSONCodecManager<Message>()).create();
 
@@ -46,10 +53,11 @@ public class LoginManager extends Thread{
 
 			PrintWriter outputWriter = new PrintWriter(out);
 			Scanner inputReader = new Scanner(in);
-			sucLog("Creo gli stream");
 			//todo: qui lo stronzo mi lancia un'eccezzione se il client si disconnette
 			read = inputReader.nextLine();
-			sucLog("Recived :" + read);
+			if (verbose)
+				sucLog("New login started" + read);
+
 			while(true) {
 				Message msg = (Message) messageHandler.fromJson(read, Message.class);
 				if (msg instanceof LoginMessage) {
@@ -63,8 +71,9 @@ public class LoginManager extends Thread{
 */
 				}
 			}
-		} catch (Exception e){
-			errLog("Error during the login handshake terminating : " + clientSocket);
+		} catch (IOException e){
+			if (verbose)
+				errLog("Error during the login handshake terminating : " + clientSocket);
 			e.printStackTrace();
 		}
 	}

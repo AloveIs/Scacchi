@@ -23,6 +23,7 @@ import sample.model.messages.*;
 import sample.model.pieces.Piece;
 import sample.model.pieces.PieceColor;
 import sample.view.popups.GiveUpPopup;
+import sample.view.popups.InnerLoginPopup;
 import sample.view.popups.OpponentGaveUpPopup;
 import sample.view.popups.TieAcceptedPopup;
 
@@ -49,10 +50,10 @@ public class OnlineGameViewController implements Initializable {
 	AnchorPane paneContainer;
 
 	@FXML
-	Label whiteUsername;
+	Label myUsername;
 
 	@FXML
-	Label blackUsername;
+	Label opponentUsername;
 
 	@FXML
 	Group groupBoard;
@@ -98,8 +99,8 @@ public class OnlineGameViewController implements Initializable {
 	}
 
 	public void setUsernames(String whiteUser, String blackUser){
-		whiteUsername.setText(whiteUser);
-		blackUsername.setText(blackUser);
+		myUsername.setText(whiteUser);
+		opponentUsername.setText(blackUser);
 	}
 
 
@@ -149,18 +150,15 @@ public class OnlineGameViewController implements Initializable {
 	}
 
 	public void setPlayers(){
-		Player p = NetworkManager.getInstance().getPlayer();
-		if (p.getSide() == PieceColor.WHITE){
-			whiteUsername.setText(p.getName());
-			blackUsername.setText(NetworkManager.getInstance().getOpponent().getName());
-		}else{
-			blackUsername.setText(p.getName());
-			whiteUsername.setText(NetworkManager.getInstance().getOpponent().getName());
-		}
+		myUsername.setText(NetworkManager.getInstance().getPlayer().getName());
+		opponentUsername.setText(NetworkManager.getInstance().getOpponent().getName());
 	}
 
 
 	private void squarePressedHandler(int index){
+
+		if(NetworkManager.getInstance().getPlayer().getSide() == PieceColor.WHITE)
+			index = 63-index;
 
 		Piece p;
 		p = chessboard.getPiece(index);
@@ -209,7 +207,7 @@ public class OnlineGameViewController implements Initializable {
 		JFXDialogLayout layout = new JFXDialogLayout();
 		NetworkManager.getInstance().closeConnection();
 		//TODO: chiudere le socket
-		layout.setHeading(new Label("Ha vinto " + (NetworkManager.getInstance().getTurn() == PieceColor.BLACK ? blackUsername.getText() : whiteUsername.getText()) + "!"));
+		layout.setHeading(new Label("Ha vinto " + (NetworkManager.getInstance().getTurn() == PieceColor.BLACK ? opponentUsername.getText() : myUsername.getText()) + "!"));
 		JFXButton goBackHome = new JFXButton("Menù");
 		layout.setBody(new Label("Cosa vui fare adesso?"));
 		goBackHome.getStyleClass().add("popupButton");
@@ -223,11 +221,11 @@ public class OnlineGameViewController implements Initializable {
 		restart.setOnAction(event -> {
 			// restore all the stuff to begin a new game
 			//todo: rientrare nella lobby e tutto il resto
-			System.exit(57);
 			//once everything is done close the box
 			jfxDialog.close();
+			restart();
+			new InnerLoginPopup(stackPane);
 			// call garbage collector
-			System.gc();
 		});
 		goBackHome.setOnAction(event ->	{
 			//todo: implement all the stuff needed to go back home
@@ -259,15 +257,15 @@ public class OnlineGameViewController implements Initializable {
 	}
 
 	private void updateTurn(PieceColor turn) {
-		if (turn == PieceColor.WHITE){
-			gameBorderPane.getStyleClass().remove("blackTurn");
-			gameBorderPane.getStyleClass().add("whiteTurn");
+		gameBorderPane.getStyleClass().add("whiteTurn");
+		if (turn == NetworkManager.getInstance().getPlayer().getSide()){
+				myUsername.getStyleClass().add("onTurn");
+				opponentUsername.getStyleClass().remove("onTurn");
 
-		}else if (turn == PieceColor.BLACK){
-			gameBorderPane.getStyleClass().remove("blackTurn");
-			gameBorderPane.getStyleClass().add("blackTurn");
+
 		}else {
-			//IN THIS CASE IS NULL, DUNNO WHAT TO DO
+			myUsername.getStyleClass().remove("onTurn");
+			opponentUsername.getStyleClass().add("onTurn");
 		}
 	}
 
@@ -276,7 +274,10 @@ public class OnlineGameViewController implements Initializable {
 		Piece p;		//used this as a cursor
 
 		for (int i = 0; i < 64; i++) {
-			p = chessboard.getPiece(i);
+			if(NetworkManager.getInstance().getPlayer().getSide() == PieceColor.WHITE)
+				p = chessboard.getPiece(63 - i);
+			else
+				p = chessboard.getPiece(i);
 
 			if (currentChessboard[i] == null && p == null) {
 				continue;
@@ -293,7 +294,10 @@ public class OnlineGameViewController implements Initializable {
 	private void highlight() {
 		for (Coordinate c : highlighted){
 			int index = c.getAsIndex();
-			squares.get(index).getStyleClass().add("highlighted");
+			if(NetworkManager.getInstance().getPlayer().getSide() == PieceColor.WHITE)
+				squares.get(63-index).getStyleClass().add("highlighted");
+			else
+				squares.get(index).getStyleClass().add("highlighted");
 		}
 	}
 	/** Remove highlighting from the previous reachable cells	 */
@@ -301,8 +305,10 @@ public class OnlineGameViewController implements Initializable {
 
 		for (Coordinate c : highlighted){
 			int index = c.getAsIndex();
-
-			squares.get(index).getStyleClass().remove("highlighted");
+			if(NetworkManager.getInstance().getPlayer().getSide() == PieceColor.WHITE)
+				squares.get(63-index).getStyleClass().remove("highlighted");
+			else
+				squares.get(index).getStyleClass().remove("highlighted");
 		}
 		highlighted.clear();
 	}
@@ -326,7 +332,12 @@ public class OnlineGameViewController implements Initializable {
 
 		for (int i = 0 ; i < 64; i++){
 			//add al the pieces to the list
-			p = chessboard.getPiece(i);
+			if(NetworkManager.getInstance().getPlayer() != null &&
+					NetworkManager.getInstance().getPlayer().getSide() == PieceColor.WHITE)
+				p = chessboard.getPiece(63 - i);
+			else
+				p = chessboard.getPiece(i);
+
 			currentChessboard[i] = p;
 			//setup the image
 			imageViewSquares.get(i).setImage(ImagePicker.get(p));

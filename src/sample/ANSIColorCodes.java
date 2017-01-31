@@ -25,4 +25,5 @@ public class ANSIColorCodes {
 	public static final String ANSI_BG_PURPLE = "\u001B[45m";
 	public static final String ANSI_BG_CYAN = "\u001B[46m";
 	public static final String ANSI_BG_WHITE = "\u001B[47m";
+
 }

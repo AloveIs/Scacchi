@@ -6,7 +6,6 @@ import sample.model.messages.JSONCodecManager;
 import sample.model.messages.Message;
 
 import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.util.Scanner;
 
 

@@ -2,12 +2,9 @@ package sample.model.pieces;
 
 import sample.model.Chessboard;
 import sample.model.Coordinate;
-import sample.model.Move;
 import sample.model.exception.CoordinateExceededException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**Class representig the King piece
  * Created by Pietro on 25/10/2016.

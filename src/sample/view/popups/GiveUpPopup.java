@@ -1,17 +1,14 @@
 package sample.view.popups;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import sample.client.NetworkManager;
 import sample.client.SessionManager;
-import sample.model.pieces.PieceColor;
 
 /**
  * Created by Pietro on 19/01/2017.
@@ -42,7 +39,11 @@ public class GiveUpPopup {
 		jfxDialog.show();
 		//reset the nameField after an illegal name is entered
 
-
+		newGameBtn.setOnAction(event -> {
+			//on abort close the popup
+			jfxDialog.close();
+			new InnerLoginPopup(stackPane);
+		});
 
 
 		exitBtn.setOnAction(event -> {

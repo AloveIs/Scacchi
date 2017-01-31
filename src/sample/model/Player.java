@@ -2,8 +2,6 @@ package sample.model;
 
 import sample.model.pieces.PieceColor;
 
-import java.io.Serializable;
-
 /**
  * Created by Pietro on 25/10/2016.
  */
@@ -28,6 +26,6 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return name + "|" + side.toString();
+		return name + "[" + side.toString() + "]";
 	}
 }

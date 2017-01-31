@@ -19,14 +19,6 @@ public class Client extends Application{
 	public void start(Stage primaryStage) throws Exception{
 		SessionManager.getInstance().setStage(primaryStage);
 
-		//Parent root = FXMLLoader.load(getClass().getResource("../view/startScreen.fxml"));
-		//Parent root = FXMLLoader.load(getClass().getResource("../view/prova2.fxml"));
-		//FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/prova1.fxml"));
-
-
-		//local game loader
-		//FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/chessboardLocal.fxml"));
-
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/view/startScreen.fxml"));
 
 		Parent root = loader.load();
@@ -36,13 +28,6 @@ public class Client extends Application{
 		//primaryStage.setFullScreen(true);
 		Scene scene = new Scene(root);
 
-		//########### da utilizzare solo con scacchiera1
-		//GameViewController controller = (GameViewController) loader.getController();
-		//controller.setScene(scene);
-		//##############################
-
-		//already present in CSS
-		//Image sfondo = new Image("sample/view/sfondo2.jpg");
 		SessionManager.getInstance().setStartScreen(scene);
 		primaryStage.setMinHeight(800);
 		primaryStage.setMinWidth(1000);
