@@ -14,8 +14,6 @@ import static sample.ANSIColorCodes.*;
  */
 public class ServerMain {
 
-
-
 	private static final int MAX_ATTEMPTS = 6;
 	private static final int LOOP = 10;
 	private static final char VERBOSE_SERVER_LISTENER = '1';
