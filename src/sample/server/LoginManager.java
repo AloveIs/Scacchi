@@ -59,7 +59,7 @@ public class LoginManager extends Thread{
 				sucLog("New login started" + read);
 
 			while(true) {
-				Message msg = (Message) messageHandler.fromJson(read, Message.class);
+				Message msg = (Message) messageHandler.fromJson(read, sample.model.messages.Message.class);
 				if (msg instanceof LoginMessage) {
 					LoginMessage loginMsg = (LoginMessage) msg;
 					PlayerPool.getInstance().add(new ServerPlayer(loginMsg.getPlayer(), clientSocket, inputReader , outputWriter));

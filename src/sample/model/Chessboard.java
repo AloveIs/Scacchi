@@ -362,7 +362,7 @@ public class Chessboard implements Serializable{
 
 	/** Prints a list of the active Pieces
 	 * The list represents all the pieces and their possible moves
-	 * in a comnad line manner.
+	 * in a comand line manner.
 	 */
 	public void printChessboardsMoves() {
 

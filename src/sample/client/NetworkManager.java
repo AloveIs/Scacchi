@@ -28,7 +28,7 @@ import java.net.Socket;
  */
 public class NetworkManager {
 
-	private static final int DEFAULT_PORT = 5757;
+	private static final int DEFAULT_PORT = 57575;
 	private static final String SERVER_ADD = "127.0.0.1";
 
 	private static NetworkManager instance = null;

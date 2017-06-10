@@ -26,7 +26,7 @@ public abstract class Piece implements Serializable{
 	protected PieceType type;
 	protected PieceColor color;
 	protected Coordinate position;
-	protected Chessboard chessboard;
+	protected transient Chessboard chessboard;
 	protected boolean yetMoved;
 
 	/*TODO: come impedire a un giocatore di fare mosse che comportano scacco? prima io farei

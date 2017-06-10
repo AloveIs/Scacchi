@@ -27,7 +27,7 @@ public class ServerListener extends Thread{
 	public static boolean verbose = false;
 
 	/**The default port for listening for new connections */
-	private static final int DEFAULT_PORT = 5757;
+	private static final int DEFAULT_PORT = 57575;
 	private ServerSocket socket;
 
 	/** Create the ServerListener on a specif port
